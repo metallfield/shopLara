@@ -10,7 +10,7 @@ class CategoriesRepository
 {
     public function getAllCategories()
     {
-        return Category::get();
+        return Category::paginate(6);
     }
 
     public function createCategory($data)

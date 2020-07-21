@@ -17,4 +17,17 @@ class Market extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function isAddedProduct($id)
+    {
+        $productArr = [];
+        foreach ($this->products as $product) {
+            $productArr[] = $product->id;
+        }
+        if (in_array($id, $productArr))
+        {
+            return true;
+        }else{
+            return  false;
+        }
+    }
 }

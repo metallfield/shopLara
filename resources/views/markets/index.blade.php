@@ -31,6 +31,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" value="delete">delete</button></form>
+                        <a href="{{route('markets.products', [$market])}}" class="btn btn-group btn-outline-info">products</a>
                     </td>
 
                 </tr>

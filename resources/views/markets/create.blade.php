@@ -19,13 +19,16 @@
             @error('description')
             <p class="alert alert-warning">{{$message}}</p>
             @enderror
+
             <div class="form-group">
-                <label for="location">location</label>
-                <input type="text" name="location" id="location" class="form-control" >
+                <label for="address_address">Address</label>
+                <input type="text" id="address-input" name="address_address" class="form-control map-input">
+                <input type="hidden" name="address_latitude" id="address-latitude" value="0" />
+                <input type="hidden" name="address_longitude" id="address-longitude" value="0" />
             </div>
-            @error('location')
-            <p class="alert alert-warning">{{$message}}</p>
-            @enderror
+            <div id="address-map-container" style="width:100%;height:400px; ">
+                <div style="width: 100%; height: 100%" id="address-map"></div>
+            </div>
             <button type="submit" class="btn btn-outline-info btn-block">create</button>
             @csrf
         </form>

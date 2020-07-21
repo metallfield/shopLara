@@ -35,8 +35,7 @@ class ProductRepository
         $category = Category::where('name', $category)->select('id')->first();
         if ($category)
         {
-            $product = Product::find($product)->first();
-             $product->categories()->attach($category);
+             Product::find($product)->categories()->attach($category);
              return true;
         }
     }

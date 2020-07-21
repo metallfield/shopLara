@@ -1,21 +1,14 @@
+<?php
+?>
 @extends('layouts.app')
-
+@section('title', $category->name)
 @section('content')
-<div class="container">
-    <h1>home page</h1>                <div class="card-body">
-        @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
-            </div>
-        @endif
+    <div class="container">
+        <h3>Category {{$category->name}}</h3>
+        <p>description: {{$category->description}}</p>
 
-
-    <div class="row justify-content-center">
-
-
-
-                @foreach($products as $product)
-
+            <div class="row">
+                @foreach($category->products as $product)
                     <div class="col m-4 border rounded">
                         <img src="{{Storage::url($product->image)}}" alt="" width="" height="100" class="w-100">
                         <h4><a href="{{route('products.show', [$product])}}">{{$product->name}}</a></h4>
@@ -27,8 +20,6 @@
                         <br><span class="text-success font-weight-bold">price: {{$product->price}}</span>
                     </div>
                 @endforeach
-
-</div>   </div>
-    {{$products->links()}}
-</div>
+            </div>
+    </div>
 @endsection

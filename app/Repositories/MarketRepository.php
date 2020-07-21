@@ -24,4 +24,9 @@ class MarketRepository
     {
         return Market::create($data);
     }
+
+    public function updateMarket($data, Market $market)
+    {
+        return $market->update($data);
+    }
 }

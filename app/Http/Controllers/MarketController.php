@@ -3,16 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Market;
+use App\Repositories\ProductRepository;
 use App\Services\MarketService;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MarketController extends Controller
 {
 private $marketService;
+    /**
+     * @var \Illuminate\Contracts\Foundation\Application|mixed
+     */
+    private $productRepository;
+
     public function __construct(MarketService $marketService)
     {
         $this->marketService = $marketService;
+        $this->productRepository = app(ProductRepository::class);
     }
 
     /**
@@ -44,6 +52,7 @@ private $marketService;
      */
     public function store(Request $request)
     {
+
         $data = collect($request->all());
         $result = $this->marketService->createMarket($data);
         if ($result)
@@ -60,7 +69,7 @@ private $marketService;
      */
     public function show(Market $market)
     {
-        //
+        return view('markets.show', compact('market'));
     }
 
     /**
@@ -71,7 +80,13 @@ private $marketService;
      */
     public function edit(Market $market)
     {
-        //
+        if ($this->marketService->checkOwner($market))
+        {
+            return view('markets.edit', compact('market'));
+        }else{
+            return  redirect()->back();
+        }
+
     }
 
     /**
@@ -83,7 +98,17 @@ private $marketService;
      */
     public function update(Request $request, Market $market)
     {
-        //
+        if ($this->marketService->checkOwner($market)) {
+            $data = collect($request->all());
+            $result = $this->marketService->updateMarket($data, $market);
+            if ($result) {
+                return redirect()->route('markets.index');
+            } else {
+                return redirect()->back();
+            }
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -94,6 +119,46 @@ private $marketService;
      */
     public function destroy(Market $market)
     {
-        //
+        if ($this->marketService->checkOwner($market)) {
+            if ($market->delete()) {
+                return redirect()->route('markets.index');
+            } else {
+                return false;
+            }
+        }else{
+            return redirect()->back();
+        }
+    }
+
+    public function MarketProducts(Market $market)
+    {
+        $products = $this->productRepository->getAllProducts(Auth::user());
+        return view('markets.products', compact('products', 'market'));
+    }
+
+    public function addProduct(Request $request)
+    {
+        $product_id = $request->get('product_id');
+        $market_id = $request->get('market_id');
+        $result = Market::find($market_id)->products()->attach($product_id);
+        if ($result)
+        {
+            return response()->json(['status' => 'success']);
+        }else{
+            return false;
+        }
+    }
+
+    public function removeProduct(Request $request)
+    {
+        $product_id = $request->get('product_id');
+        $market_id = $request->get('market_id');
+        $result = Market::find($market_id)->products()->detach($product_id);
+        if ($result)
+        {
+            return response()->json(['status' => 'success']);
+        }else{
+            return false;
+        }
     }
 }

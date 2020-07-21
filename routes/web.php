@@ -13,12 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'Controller@index');
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('products', 'ProductsController');
 Route::resource('categories', 'CategoriesController');
 Route::resource('markets', 'MarketController');
+Route::get('markets/{market}/products', 'MarketController@MarketProducts')->name('markets.products');
+Route::post('markets/addProduct', 'MarketController@addProduct');
+Route::post('markets/removeProduct', 'MarketController@removeProduct');
+Route::get('market-all', 'HomeController@markets')->name('markets');
+Route::get('category-all', 'HomeController@categories')->name('categories');
+Route::get('category-all/{category}/show', 'HomeController@categoryShow')->name('category-show');
