@@ -28,3 +28,5 @@ Route::post('markets/removeProduct', 'MarketController@removeProduct');
 Route::get('market-all', 'HomeController@markets')->name('markets');
 Route::get('category-all', 'HomeController@categories')->name('categories');
 Route::get('category-all/{category}/show', 'HomeController@categoryShow')->name('category-show');
+Route::get('/search', 'SearchController@search')->name('search');
+Route::post('/getNearestMarkets/', 'SearchController@nearest')->name('nearest');

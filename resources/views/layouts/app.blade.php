@@ -87,6 +87,16 @@
                                 </div>
                             </li>
                         @endguest
+                        <li class="nav-item ">
+                            <form action="/search">
+                                <div class="form-inline">
+                                    <input type="text" name="query" id="query" value="{{request()->input('query')}}">
+                                    <button type="submit" class="mx-2 btn btn-outline-info rounded-circle"><i class="fa fa-search"></i></button>
+                                </div>
+
+                            </form>
+                        </li>
+
                     </ul>
                 </div>
         </nav>
@@ -99,10 +109,12 @@
 <footer>
 
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" ></script>
+    <script src="/js/NearestMarkets.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-      <script src="https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" ></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
+     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
     <script src="/js/mapInput.js"></script>
     <script src="/js/MarketProducts.js"></script>
 

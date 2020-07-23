@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Market extends Model
 {
@@ -29,5 +30,23 @@ class Market extends Model
         }else{
             return  false;
         }
+    }
+
+    public function scopeGetByDistant($query, $lat, $lng, $radius )
+    {
+        $results = DB::select(DB::raw('SELECT *, ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat .') ) * sin( radians(lat) ) ) ) AS distance FROM markets HAVING distance < ' . $radius . ' ORDER BY distance') );
+        if(!empty($results)) {
+
+            $ids = [];
+
+            foreach($results as $q) {
+                array_push($ids, $q->id);
+            }
+
+            return $results;
+
+        }
+
+        return $query;
     }
 }
