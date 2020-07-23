@@ -24,23 +24,35 @@
         <span>description:</span><br>
         <p>{{$product->description}}</p>
     </div>
+    <form action="{{route('basketAdd', $product->id)}}" method="post">
+        @if($product->isAvaible())
+            <button class="btn-outline-dark" type="submit">v korzinu</button>
+        @else
+            <span class="font-weight-bold text-dark">нет в наличии</span>
+        @endif
+        @csrf
+    </form>
     <span>available in magazines:</span><br>
-    @foreach($product->markets as $market)
-        <h5><a href="{{route('markets.show', [$market])}}">{{$market->name}}</a></h5>
+    @if(isset($product->markets))
+    @foreach($product->markets  as $market)
+        <h5><a href="{{route('markets.show', [$market->id])}}">{{$market->name}}</a></h5>
     @endforeach
+
+
     <button type="button" class="btn btn-outline-info" id="nearest">find market near me</button>
     <div class="custom-control custom-switch">
         <input type="checkbox" class="custom-control-input " name="setRadius" id="setRadius" >
         <label class="custom-control-label" for="setRadius">set radius</label>
     </div>
     <script id="markets" type="text/x-jquery-tmpl">
-            <li><a href="{{route('markets.show', [$market])}}}">${name}</a>: ${distance}</li>
+            <li><a href="{{route('markets.show', [$market ? $market : null])}}}">${name}</a>: ${distance}</li>
              <span>location: ${location}</span></li>
         </script>
     <input type="text" name="radius" id="radius">
     <ul id="MarketList" class="list-unstyled" >
 
-    </ul>
+    </ul>    @endif
+
 </div>
 
     </div></div>

@@ -30,3 +30,16 @@ Route::get('category-all', 'HomeController@categories')->name('categories');
 Route::get('category-all/{category}/show', 'HomeController@categoryShow')->name('category-show');
 Route::get('/search', 'SearchController@search')->name('search');
 Route::post('/getNearestMarkets/', 'SearchController@nearest')->name('nearest');
+
+
+Route::get('basket', 'BasketController@basket')->name('basket');
+Route::get('basket/place', 'BasketController@basketPlace')->name('basketPlace');
+
+Route::post('basket/remove/{product}', 'BasketController@basketRemove')->name('basketRemove');
+Route::post('basket/place', 'BasketController@basketConfirm')->name('basketConfirm');
+Route::post('/basket/add/{product}', 'BasketController@basketAdd')->name('basketAdd');
+Route::get('/orders', 'OrderController@index')->name('orders.index');
+Route::get('/order/{order}', 'OrderController@show')->name('orders.show');
+
+Route::get('stripe', 'StripePaymentController@stripe');
+Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post');

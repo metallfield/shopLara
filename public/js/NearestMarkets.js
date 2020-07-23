@@ -4,6 +4,7 @@ $(document).ready(function () {
         $('#radius').fadeToggle(1000);
     })
     $('#nearest').on('click', function () {
+        $('#MarketList').empty();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -28,6 +29,7 @@ $(document).ready(function () {
     });
 
     function getTmpl(data) {
+
         $('#MarketList').empty();
         $.each(data, function (i , market) {
             let tmplt  = '<li><a href="/markets/'+market.id+'">'+market.name+'</a>: '+  market.distance.toFixed(2)+'km</li>' +

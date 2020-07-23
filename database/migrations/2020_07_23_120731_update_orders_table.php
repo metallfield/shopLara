@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterMarketsTable extends Migration
+class UpdateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AlterMarketsTable extends Migration
      */
     public function up()
     {
-        Schema::table('markets', function (Blueprint $table) {
-          $table->double('lat')->nullable();
-           $table->double('lng')->nullable();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->string('shipping_address')->nullable();
         });
     }
 

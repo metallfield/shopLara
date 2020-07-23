@@ -45,6 +45,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('categories')}}">categories</a>
                         </li>
+                        <li class="nav-item  ">
+                            <a class="nav-link" href="{{ route('basket')}}">Basket</a>
+                        </li>
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -54,7 +57,9 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
-                        @else
+                        @else   <li class="nav-item">
+                            <a class="nav-link" href="{{route('orders.index')}}">my orders </a>
+                        </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                    dashboard <span class="caret"></span>
@@ -69,6 +74,7 @@
                                 </div>
 
                             </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -115,11 +121,12 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
      <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script src="/js/stripe.js"></script>
     <script src="/js/mapInput.js"></script>
     <script src="/js/MarketProducts.js"></script>
 
-    <button onclick="getLocation()">Try It</button>
-    <script src="/js/getCurrentLocation.js"></script>
+     <script src="/js/getCurrentLocation.js"></script>
   </footer>
 </body>
 </html>

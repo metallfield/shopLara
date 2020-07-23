@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+
+    use softDeletes;
     protected $guarded = [];
     /**
      * @var mixed
@@ -39,5 +42,21 @@ class Product extends Model
 
             return true;
         }
+    }
+
+    public function getPriceForCount(){
+        if (!is_null($this->pivot)) {
+            return $this->pivot->count * $this->price;
+        }
+        return $this->price;
+    }
+    public function countProduct(){
+
+        return $this->pivot->count;
+    }
+
+    public function isAvaible(){
+
+        return $this->count > 0 && !$this->trashed();
     }
 }
