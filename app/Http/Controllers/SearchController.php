@@ -4,21 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Market;
 use App\Product;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
+    /**
+     * @var ProductRepository
+     */
+    private $productRepository;
+
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
     public function search(Request $request)
     {
         $query = $request->get('query');
-        $products = Product::with('categories')->where('name', 'LIKE', '%' . $query . '%')->get();
+        $products = $this->productRepository->getForSearch($query);
         return view('search', compact('products'));
     }
 
     public function nearest(Request $request)
     {
         $product_markets = [];
-        $product = Product::where('id', $request->product_id)->first();
+        $product = $this->productRepository->getProductById($request->product_id);
         foreach ($product->markets as $market) {
             $product_markets[] = $market->id;
         }

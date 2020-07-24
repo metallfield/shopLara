@@ -15,7 +15,7 @@ class BasketController extends Controller
 
     public function basket(){
         $order = (new Basket())->getOrder();
-        return view('basket', compact('order'));
+         return view('basket', compact('order'));
     }
 
     public function basketConfirm(OrderRequest $request){

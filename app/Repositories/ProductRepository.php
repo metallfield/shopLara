@@ -20,9 +20,17 @@ class ProductRepository
     }
     public function getAllProductsForFilter()
     {
-        return Product::with('categories');
+        return Product::with('categories')->orderBy('updated_at', 'desc');
+    }
+    public function getForSearch($query)
+    {
+        return Product::with('categories')->where('name', 'LIKE', '%' . $query . '%')->paginate(6);
     }
 
+    public function getProductById($id)
+    {
+        return Product::where('id', $id)->first();
+    }
     public function storeProduct($data)
     {
         $product = Product::create($data)->id;
