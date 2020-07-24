@@ -67,4 +67,16 @@ class Order extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function ownerProductsSum()
+    {
+        $sum = 0;
+        foreach($this->products()->withTrashed()->get() as $product){
+            if (Auth::user()->products->contains($product))
+            {
+                $sum += $product->getPriceForCount();
+            }
+        }
+        return $sum;
+    }
 }

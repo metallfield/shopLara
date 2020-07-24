@@ -17,7 +17,8 @@ class SearchController extends Controller
 
     public function nearest(Request $request)
     {
-        $product = Product::find($request->product_id)->first();
+        $product_markets = [];
+        $product = Product::where('id', $request->product_id)->first();
         foreach ($product->markets as $market) {
             $product_markets[] = $market->id;
         }
@@ -30,7 +31,7 @@ class SearchController extends Controller
             {
                 $result[] = $market;
             }
-            $output[] = $result;
+
         }
 
         return response()->json($result);

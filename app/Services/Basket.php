@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Classes;
+namespace App\Services;
 
 
 use App\Order;
@@ -25,8 +25,6 @@ class Basket
         }else{
             $this->order= Order::findOrFail($orderId);
         }
-
-
     }
 
     public function getOrder(){

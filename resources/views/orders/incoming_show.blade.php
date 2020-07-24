@@ -8,9 +8,6 @@
         <h1>order № {{$order->id}} </h1>
         <span>name {{$order->name}}</span><br>
         <span>address {{$order->address}}</span><br>
-        @if(isset($order->shipping_address))
-        <span>shipping: {{$order->shipping_address}}<br>
-        @endif
         <span>email: {{$order->email}}</span>
         <table class="table table-light">
             <thead>
@@ -24,10 +21,9 @@
             </thead>
             <tbody>
 
-
-            @foreach($order->products as $product)
-
-                    <tr>
+                @foreach($order->products as $product)
+                @if(auth()->user()->products->contains($product))
+                <tr>
                     <td><a href="{{route('products.show', [$product->id])}}">
                             <img src="{{Storage::url($product->image)}}" alt="" width="100" height="100"><br>
                             {{$product->name}}
@@ -36,6 +32,7 @@
                     <td>{{$product->price}}</td>
                     <td>{{$product->getPriceForCount()}}</td>
                 </tr>
+                @endif
             @endforeach
             <tr>
                 <td>full sum order: {{$order->getSumOrder()}}</td>

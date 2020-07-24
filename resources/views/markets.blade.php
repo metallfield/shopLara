@@ -9,7 +9,7 @@
 
         @foreach($markets as $market)
             <div class="col my-4 border rounded">
-        <h4>Market: <a href="{{route('markets.show', [$market])}}">{{$market->name}}</a></h4>
+        <h4>Market: <a href="{{route('marketShow', [$market])}}">{{$market->name}}</a></h4>
                 <span>Location: {{$market->location}}</span>
         <p>{{$market->description}}</p>
             </div>

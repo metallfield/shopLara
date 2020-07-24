@@ -18,6 +18,10 @@ class ProductRepository
         }
         return $query->paginate(6);
     }
+    public function getAllProductsForFilter()
+    {
+        return Product::with('categories');
+    }
 
     public function storeProduct($data)
     {

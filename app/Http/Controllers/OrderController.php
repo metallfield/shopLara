@@ -24,11 +24,30 @@ class OrderController extends Controller
          if (!Auth::user()->orders->contains($order)) {
             return back();
         }
-        return view('orders.show', compact('order'));
+         return view('orders.show', compact('order'));
     }
 
     public function incomingOrders()
     {
+        foreach (Auth::user()->products as $product)
+        {
+            if ($product->orders->count() > 0)
+            {
+                foreach ($product->orders as $order)
+                {
+                    if ($order->status === 1)
+                    {
+                        $orders[] = $order;
+                    }
 
+                }
+
+            }
+        }
+        return view('orders.incoming', compact('orders'));
+    }
+    public function incomingOrderShow(Order $order)
+    {
+            return view('orders.incoming_show', compact('order'));
     }
 }

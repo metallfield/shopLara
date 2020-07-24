@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\Basket;
-use App\Order;
+ use App\Order;
+use App\Services\Basket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe;

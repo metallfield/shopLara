@@ -17,25 +17,25 @@
     @if(isset($product->categories))
         <span class="font-weight-bold">categories:</span>
         @foreach($product->categories as $category)
-            <a href="{{route('categories.show', [$category->id])}}" class="badge badge-info">{{$category->name}}</a>
+            <a href="{{route('category-show', [$category->id])}}" class="badge badge-info">{{$category->name}}</a>
         @endforeach
     @endif
     <div class="p-4 my-4 border rounded ">
         <span>description:</span><br>
         <p>{{$product->description}}</p>
     </div>
-    <form action="{{route('basketAdd', $product->id)}}" method="post">
+
         @if($product->isAvaible())
-            <button class="btn-outline-dark" type="submit">v korzinu</button>
+            <button class="btn-outline-dark" type="button" data-product="{{$product->id}}" id="addProduct" >v korzinu</button>
         @else
             <span class="font-weight-bold text-dark">нет в наличии</span>
         @endif
         @csrf
-    </form>
+
     <span>available in magazines:</span><br>
     @if(isset($product->markets))
     @foreach($product->markets  as $market)
-        <h5><a href="{{route('markets.show', [$market->id])}}">{{$market->name}}</a></h5>
+        <h5><a href="{{route('marketShow', [$market->id])}}">{{$market->name}}</a></h5>
     @endforeach
 
 
@@ -45,7 +45,7 @@
         <label class="custom-control-label" for="setRadius">set radius</label>
     </div>
     <script id="markets" type="text/x-jquery-tmpl">
-            <li><a href="{{route('markets.show', [$market ? $market : null])}}}">${name}</a>: ${distance}</li>
+            <li><a href="{{route('markets.show', [$market ?? ''])}}}">${name}</a>: ${distance}</li>
              <span>location: ${location}</span></li>
         </script>
     <input type="text" name="radius" id="radius">

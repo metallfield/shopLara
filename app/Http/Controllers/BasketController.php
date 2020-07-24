@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\Basket;
-use App\Order;
+ use App\Http\Requests\OrderRequest;
+ use App\Order;
 use App\Product;
+use App\Services\Basket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BasketController extends Controller
 {
+
+
     public function basket(){
         $order = (new Basket())->getOrder();
         return view('basket', compact('order'));
     }
 
-    public function basketConfirm(Request $request){
+    public function basketConfirm(OrderRequest $request){
 
         $email = Auth::check() ? Auth::user()->email : $request->email;
         $name = Auth::check() ? Auth::user()->name : $request->name;

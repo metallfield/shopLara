@@ -4,17 +4,17 @@
 @section('title', 'basket')
 @section('content')
 
-    <h1>this is KORZINA</h1> <span class="font-weight-bold text-center my-4">{{ $order->countOfProducts()}}</span>
+    <h2>basket</h2> <span class="font-weight-bold text-center my-4">{{ $order->countOfProducts()}}</span>
     <div class="container">
-        <div class="row">
+        <div class="row ">
             <ul>
                 @foreach($order->products()->with('categories')->get() as $product)
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <img src="{{Storage::url($product->image)}}" alt="" width="150" height="150">
+                    <div class="p-4 row align-items-center">
+                        <div class=" m-2 col ">
+                            <img src="{{Storage::url($product->image)}}" alt="" width="100" height="100">
                         </div>
-                        <div class="col ">
-                            <a href="{{route('products.show', [$product->id])}}"><span>{{$product->name}}</span></a>
+                        <div class="m-2 col ">
+                            <a href="{{route('productShow', [$product->id])}}"><span>{{$product->name}}</span></a>
                             <span>{{$product->price}}</span>
                         </div>
                         <form action="{{route('basketRemove', $product)}}" method="post">
@@ -23,16 +23,14 @@
                         </form>
                         {{$product->pivot->count}}
                         <form action="{{route('basketAdd', $product)}}" method="post">
-                            <button class="btn-outline-dark" type="submit">+</button>
+                            <button class="btn-outline-dark" type="submit" id="productAdd" data-product="{{$product->id}}">+</button>
                             @csrf
                         </form>
-                        <div class="col ">
-                            <p>{{$product->description}}</p>
-                        </div>
-                        <div class="col">
+
+                        <div class=" m-2 col">
                             {{$product->price}}
                         </div>
-                        <div class="col">
+                        <div class="m-2 col">
                             {{$product->getPriceForCount($product->pivot->count)}}
                         </div>
 
@@ -44,7 +42,7 @@
             </ul>
         </div>
 
-        <a  class="btn btn-outline-info float-right" href="{{route('basketPlace')}}">Create order</a>
+        <a  class="btn btn-outline-info btn-block  float-right" href="{{route('basketPlace')}}">Create order</a>
     </div>
 
 @endsection

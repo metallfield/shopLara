@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Product;
 use App\Repositories\CategoriesRepository;
 use App\Services\ProductsService;
@@ -56,7 +57,7 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         $data = collect($request->all());
         $result = $this->productsService->createProduct($data);
@@ -101,7 +102,7 @@ class ProductsController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(PostRequest $request, Product $product)
     {
         $data = collect($request->all());
         $this->productsService->updateProduct($data, $product);

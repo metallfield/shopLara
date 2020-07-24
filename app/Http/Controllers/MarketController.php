@@ -19,6 +19,7 @@ private $marketService;
 
     public function __construct(MarketService $marketService)
     {
+        $this->middleware('auth');
         $this->marketService = $marketService;
         $this->productRepository = app(ProductRepository::class);
     }

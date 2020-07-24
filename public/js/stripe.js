@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var $form         = $(".require-validation");
+    var $form = $(".require-validation");
 
     $('form.require-validation').bind('submit', function(e) {
         var $form         = $(".require-validation"),
@@ -29,7 +29,8 @@ $(document).ready(function() {
                 number: $('.card-number').val(),
                 cvc: $('.card-cvc').val(),
                 exp_month: $('.card-expiry-month').val(),
-                exp_year: $('.card-expiry-year').val()
+                exp_year: $('.card-expiry-year').val(),
+
             }, stripeResponseHandler);
         }
 

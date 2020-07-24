@@ -71,6 +71,9 @@
                                     </a> <a class="dropdown-item" href="{{ route('markets.index') }}">
                                         markets edit
                                     </a>
+                                   <a class="dropdown-item" href="{{ route('incomingOrders') }}">
+                                        incoming orders
+                                    </a>
                                 </div>
 
                             </li>
@@ -125,7 +128,7 @@
     <script src="/js/stripe.js"></script>
     <script src="/js/mapInput.js"></script>
     <script src="/js/MarketProducts.js"></script>
-
+    <script src="/js/addProduct.js"></script>
      <script src="/js/getCurrentLocation.js"></script>
   </footer>
 </body>
