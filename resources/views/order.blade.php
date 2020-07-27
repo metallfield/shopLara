@@ -48,13 +48,22 @@
 
                     <label for="address">billing address</label>
                     <input type="text" name="address" id="address" class="form-control my-2">
+                    @error('address')
+                    <p class="alert alert-warning">{{$message}}</p>
+                    @enderror
                     <label for="shipping_address">shipping address</label>
                     <input type="text" name="shipping_address" id="shipping_address" class="form-control my-2">
                     @guest
                         <label for="name">name</label>
                         <input type="text" name="name" id="name" class="form-control my-2 d-block">
+                        @error('name')
+                        <p class="alert alert-warning">{{$message}}</p>
+                        @enderror
                         <label for="email">email</label>
                         <input type="email" name="email" id="email" class="form-control my-2 d-block">
+                        @error('email')
+                        <p class="alert alert-warning">{{$message}}</p>
+                        @enderror
                     @endguest
                     <div class='m-4 form-row row '>
                         <div class='col-xs-12 form-group card required'>
@@ -83,7 +92,7 @@
                     </div>
 
                     <div class='form-row row'>
-                        <div class='col-md-12 error form-group hide'>
+                        <div class='col-md-12 error form-group ' hidden>
                             <div class='alert-danger alert'>Please correct the errors and try
                                 again.</div>
                         </div>

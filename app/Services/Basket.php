@@ -14,7 +14,6 @@ class Basket
 
     public function __construct($createOrder = false){
         $orderId = session('orderId');
-
         if(is_null($orderId) && $createOrder){
             $data = [];
             if (Auth::check()) {
@@ -36,7 +35,7 @@ class Basket
 
     public function countAvailable(){
         foreach ($this->order->products as $orderProduct) {
-            if($orderProduct->count <  $this->getPivot($orderProduct)->count)
+            if($orderProduct->count < $this->getPivot($orderProduct)->count)
                 return false;
         }
         return true;
@@ -79,13 +78,11 @@ class Basket
             }
             $pivotRow->update();
         } else{
-            if ($product->count == 0) {
+            if ($product->count     == 0) {
                 return false;
             }
             $this->order->products()->attach($product->id);
         }
-
-
         Order::changeFullSum($product->price);
         return true;
     }

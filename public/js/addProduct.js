@@ -8,7 +8,7 @@ $(document).ready(function () {
         });
         $.post('/basket/add/'+product_id, (data) =>{
             $('#addProduct').text('product added in your basket');
-            $('#addProduct').attr("disabled", true);
+            $('#addProduct').prop("disabled", true);
             console.log(JSON.stringify(data));
         })
     });

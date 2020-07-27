@@ -35,7 +35,7 @@
                 @endif
             @endforeach
             <tr>
-                <td>full sum order: {{$order->getSumOrder()}}</td>
+                <td>full sum order: {{$order->ownerProductsSum()}}</td>
             </tr>
             </tbody>
         </table>

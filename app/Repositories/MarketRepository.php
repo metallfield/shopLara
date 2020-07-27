@@ -19,7 +19,14 @@ class MarketRepository
         }
         return $query->paginate(6);
     }
+    public function attachProduct($product_id, $market_id)
+    {
+        return Market::find($market_id)->products()->attach($product_id);;
+    }
 
+    public function detachProduct($product_id, $market_id){
+        return Market::find($market_id)->products()->detach($product_id);
+    }
     public function createNewMarket($data)
     {
         return Market::create($data);

@@ -20,6 +20,8 @@ $(document).ready(function () {
                     $.post('/getNearestMarkets', {lat:lat, lng:lng, radius:radius, product_id:product_id }, (data)=>{
                             console.log(JSON.stringify(data));
                             getTmpl(data);
+                    }).fail(function () {
+                        $('#MarketList').html('<h4>sorry markets not found</h4>');
                     })
                 });
             } else {
@@ -29,14 +31,11 @@ $(document).ready(function () {
     });
 
     function getTmpl(data) {
-
         $('#MarketList').empty();
         $.each(data, function (i , market) {
-            let tmplt  = '<li><a href="/markets/'+market.id+'">'+market.name+'</a>: '+  market.distance.toFixed(2)+'km</li>' +
-                '        <span>location:'+ market.location+'</span></li>';
+            let tmplt  = '<li class="font-weight-bold"><a href="/markets/'+market.id+'">'+market.name+'</a>: '+  market.distance.toFixed(2)+'km</li>' +
+                '        <span>location: <span class="font-weight-bold">'+  market.location+'</span></span></li>';
                 $('#MarketList').append(tmplt);
         });
-
-
     }
 });

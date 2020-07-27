@@ -1,9 +1,9 @@
 $(document).ready(function() {
 
-    var $form = $(".require-validation");
+    let $form = $(".require-validation");
 
     $('form.require-validation').bind('submit', function(e) {
-        var $form         = $(".require-validation"),
+        let $form         = $(".require-validation"),
             inputSelector = ['input[type=email]', 'input[type=password]',
                 'input[type=text]', 'input[type=file]',
                 'textarea'].join(', '),
@@ -14,7 +14,7 @@ $(document).ready(function() {
 
         $('.has-error').removeClass('has-error');
         $inputs.each(function(i, el) {
-            var $input = $(el);
+            let $input = $(el);
             if ($input.val() === '') {
                 $input.parent().addClass('has-error');
                 $errorMessage.removeClass('hide');
@@ -44,7 +44,7 @@ $(document).ready(function() {
                 .text(response.error.message);
         } else {
             /* token contains id, last4, and card type */
-            var token = response['id'];
+            let token = response['id'];
 
             $form.find('input[type=text]').empty();
             $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");

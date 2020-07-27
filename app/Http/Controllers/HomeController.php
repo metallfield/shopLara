@@ -54,6 +54,7 @@ class HomeController
         if ($request->filled('price_to')) {
             $productsQuery->where('price', '<=', $request->price_to)->orderBy('price');
         }
+
         $products = $productsQuery->paginate(9)->withPath('?'.$request->getQueryString());
         return view('home', ['products' => $products]);
     }
@@ -75,7 +76,8 @@ class HomeController
     }
     public function ProductShow(Product $product)
     {
-        return view('products.show', compact('product'));
+        $recommendProducts = $this->productsRepository->getRecommendProducts();
+        return view('products.show', compact('product', 'recommendProducts'));
     }
     public function MarketShow(Market $market)
     {

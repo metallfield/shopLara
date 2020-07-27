@@ -31,6 +31,7 @@ Route::post('markets/removeProduct', 'MarketController@removeProduct');
 Route::get('market-all', 'HomeController@markets')->name('markets');
 Route::get('category-all', 'HomeController@categories')->name('categories');
 Route::get('category-all/{category}/show', 'HomeController@categoryShow')->name('category-show');
+
 Route::get('/search', 'SearchController@search')->name('search');
 Route::post('/getNearestMarkets/', 'SearchController@nearest')->name('nearest');
 
@@ -46,5 +47,4 @@ Route::get('/order/{order}', 'OrderController@show')->name('orders.show');
 Route::get('/incomingOrders', 'OrderController@incomingOrders')->name('incomingOrders');
 Route::get('incomingOrderShow/{order}', 'OrderController@incomingOrderShow')->name('incomingOrderShow');
 
-Route::get('stripe', 'StripePaymentController@stripe');
 Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+ use App\Http\Requests\OrderRequest;
  use App\Order;
 use App\Services\Basket;
 use Illuminate\Http\Request;
@@ -9,15 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Stripe;
 class StripePaymentController extends Controller
 {
-    /**
-     * success response method.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function stripe()
-    {
-        return view('stripe');
-    }
 
     /**
      * success response method.
@@ -26,10 +18,9 @@ class StripePaymentController extends Controller
      */
     public function stripePost(Request $request)
     {
-
         $email = Auth::check() ? Auth::user()->email : $request->email;
         $name = Auth::check() ? Auth::user()->name : $request->name;
-        $billing_address = $request->address ? $request->address : null ;
+        $billing_address = $request->address ? $request->address : null;
         $shipping = $request->shipping_address ? $request->shipping_address : null;
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
@@ -37,7 +28,7 @@ class StripePaymentController extends Controller
                 "amount" => $request->get('amount') * 100,
                 "currency" => "usd",
                 "source" => $request->stripeToken,
-                "description" => "Test payment from itsolutionstuff.com."
+                "description" => "Test payment from shop.loc."
             ]);
 
             $success = (new Basket())->saveOrder($name, $billing_address, $email, $shipping);

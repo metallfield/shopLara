@@ -10,7 +10,7 @@
         @foreach($markets as $market)
             <div class="col my-4 border rounded">
         <h4>Market: <a href="{{route('marketShow', [$market])}}">{{$market->name}}</a></h4>
-                <span>Location: {{$market->location}}</span>
+                <span>Location: <span class="font-weight-bold">{{$market->location}}</span></span>
         <p>{{$market->description}}</p>
             </div>
         @endforeach

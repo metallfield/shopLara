@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Market;
+use App\Product;
 use App\Repositories\MarketRepository;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -57,5 +58,29 @@ class MarketService
         else{
             return  false;
         }
+    }
+    public function attachProduct($product_id, $market_id)
+    {
+        return $this->marketRepository->attachProduct($product_id, $market_id);
+    }
+
+    public function detachProduct($product_id, $market_id)
+    {
+        return $this->marketRepository->detachProduct($product_id, $market_id);
+    }
+    public function getNearestMarkets(Product $product, $lat, $lng, $radius)
+    {
+        foreach ($product->markets as $market) {
+            $product_markets[] = $market->id;
+        }
+        $markets = Market::getByDistant($lat, $lng, $radius);
+        foreach ($markets as $market) {
+            if (in_array($market->id, $product_markets))
+            {
+                $result[] = $market;
+            }
+
+        }
+        return $result ? $result : null;
     }
 }

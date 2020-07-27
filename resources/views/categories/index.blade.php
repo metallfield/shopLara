@@ -4,7 +4,7 @@
 @section('title', 'admin category')
 @section('content')
     <div class="container">
-        <h2>tags page</h2>
+        <h2>categories page</h2>
         <table class="table table-light">
             <thead>
             <tr>

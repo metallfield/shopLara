@@ -12,24 +12,29 @@ class ProductRepository
 {
     public function getAllProducts(?User $user = null)
     {
-        $query = Product::with('categories', 'user')->orderBy('updated_at', 'desc');
+        $query = Product::with('categories', 'user');
         if($user !== null) {
             $query->where('user_id', $user->id);
         }
         return $query->paginate(6);
     }
+    public function getRecommendProducts()
+    {
+        return Product::with('categories')->inRandomOrder()->take(3)->get();
+    }
     public function getAllProductsForFilter()
     {
-        return Product::with('categories')->orderBy('updated_at', 'desc');
+        return Product::with('categories');
     }
     public function getForSearch($query)
     {
-        return Product::with('categories')->where('name', 'LIKE', '%' . $query . '%')->paginate(6);
+        return Product::with('categories')->where('name', 'LIKE', '%' . $query . '%')
+            ->orWhere('description', 'LIKE', '%' . $query . '%')->paginate(6);
     }
 
     public function getProductById($id)
     {
-        return Product::where('id', $id)->first();
+        return Product::with('markets')->where('id', $id)->first();
     }
     public function storeProduct($data)
     {
@@ -43,7 +48,6 @@ class ProductRepository
     }
     public function attachCategory($product,  $category)
     {
-
         $category = Category::where('name', $category)->select('id')->first();
         if ($category)
         {

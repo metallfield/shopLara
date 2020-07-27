@@ -141,7 +141,8 @@ private $marketService;
     {
         $product_id = $request->get('product_id');
         $market_id = $request->get('market_id');
-        $result = Market::find($market_id)->products()->attach($product_id);
+        $result = $this->marketService->attachProduct($product_id , $market_id);
+
         if ($result)
         {
             return response()->json(['status' => 'success']);
@@ -154,7 +155,7 @@ private $marketService;
     {
         $product_id = $request->get('product_id');
         $market_id = $request->get('market_id');
-        $result = Market::find($market_id)->products()->detach($product_id);
+        $result = $this->marketService->detachProduct($product_id, $market_id);
         if ($result)
         {
             return response()->json(['status' => 'success']);

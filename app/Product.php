@@ -10,10 +10,6 @@ class Product extends Model
 
     use softDeletes;
     protected $guarded = [];
-    /**
-     * @var mixed
-     */
-
 
     public function categories()
     {

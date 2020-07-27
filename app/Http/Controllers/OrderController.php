@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
 
-    public function  __construct()
+    private $orderService;
+    public function  __construct(OrderService $orderService)
     {
         $this->middleware('auth');
+        $this->orderService = $orderService;
     }
 
     public function index()
     {
-         $orders = Auth::user()->orders()->Active()->paginate(8);
+         $orders = Auth::user()->orders()->Active()->paginate(6);
 
         return view('orders.index', compact([ 'orders']));
     }
@@ -29,21 +32,8 @@ class OrderController extends Controller
 
     public function incomingOrders()
     {
-        foreach (Auth::user()->products as $product)
-        {
-            if ($product->orders->count() > 0)
-            {
-                foreach ($product->orders as $order)
-                {
-                    if ($order->status === 1)
-                    {
-                        $orders[] = $order;
-                    }
+        $orders = $this->orderService->getIncomingOrders();
 
-                }
-
-            }
-        }
         return view('orders.incoming', compact('orders'));
     }
     public function incomingOrderShow(Order $order)

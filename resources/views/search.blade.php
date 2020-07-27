@@ -21,7 +21,7 @@
 
             <div class="row justify-content-center">
 
-
+                @if($products->count() > 0)
 
                 @foreach($products as $product)
 
@@ -36,7 +36,9 @@
                         <br><span class="text-success font-weight-bold">price: {{$product->price}}</span>
                     </div>
                 @endforeach
-
+                @else
+                <h3>nothing found by this query : {{request()->input('query')}}</h3>
+                @endif
             </div>
         {{$products->links()}}
         </div>

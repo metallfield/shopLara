@@ -15,7 +15,7 @@
             @enderror
             <div class="form-group">
                 <label for="description">description</label>
-                <textarea type="text" name="description" class="form-control" >{{old('description', isset($product)? $product->description : null)}}
+                <textarea type="text" name="description" class="form-control"  rows="6" cols="10">{{old('description', isset($product)? $product->description : null)}}
                 </textarea>
             </div>
             @error('description')
@@ -31,11 +31,9 @@
             @error('categories')
             <p class="alert alert-warning">{{$message}}</p>
             @enderror
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input " id="customSwitch1" >
-                <label class="custom-control-label" for="customSwitch1">has image</label>
-            </div>
+
             <div class="form-group">
+                <label for="image">image</label><br>
                 <input id="image" type="file" class="form-controll-file" name="image" >
             </div>
             @error('image')

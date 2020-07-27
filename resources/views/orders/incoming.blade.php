@@ -5,6 +5,7 @@
 @section('content')
 
     <div class="container my-4">
+        <h3>incoming orders</h3>
         <table class="table table-light">
             <thead>
             <tr>

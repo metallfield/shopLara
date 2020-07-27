@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->double('price')->unsigned()->default(0);
             $table->text('description');
             $table->string('image')->nullable();
-            $table->tinyInteger('count')->nullable()->default(0);
+            $table->Integer('count')->nullable()->default(0);
             $table->Integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();

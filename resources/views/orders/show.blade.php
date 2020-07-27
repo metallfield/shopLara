@@ -6,8 +6,8 @@
 @section('content')
     <div class="container">
         <h1>order № {{$order->id}} </h1>
-        <span>name {{$order->name}}</span><br>
-        <span>address {{$order->address}}</span><br>
+        <span>username: {{$order->name}}</span><br>
+        <span>address: {{$order->address}}</span><br>
         @if(isset($order->shipping_address))
         <span>shipping: {{$order->shipping_address}}<br>
         @endif
@@ -30,8 +30,8 @@
                     <tr>
                     <td><a href="{{route('products.show', [$product->id])}}">
                             <img src="{{Storage::url($product->image)}}" alt="" width="100" height="100"><br>
-                            {{$product->name}}
-                        </a></td>
+                         <span class="my-2 text-center text-dark">  {{substr($product->name, 0 , 40)}}</span>
+            </a></td>
                     <td>{{$product->countProduct()}}</td>
                     <td>{{$product->price}}</td>
                     <td>{{$product->getPriceForCount()}}</td>

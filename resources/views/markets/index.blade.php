@@ -19,19 +19,20 @@
                 <tr>
                     <th scope="row">{{$market->id}}</th>
                     <td>
-                        {{$market->name}}
+                        <a href="{{route('marketShow', [$market])}}">    {{$market->name}}</a>
                     </td>
                     <td>
                         {{$market->description}}
                     </td>
                     <td>{{$market->location}}</td>
-                    <td>
-                        <form action="{{route('markets.destroy', $market)}}" method="POST"><a href="{{route('markets.show', [$market])}}" class="btn btn-outline-success">show</a>
-                            <a class="btn btn-group btn-warning" href="{{route('markets.edit', [$market])}}">edit</a>
+                    <td >
+                        <form action="{{route('markets.destroy', $market)}}" method="POST" class="d-flex flex-column align-items-lg-stretch ">
+                            <a class="m-1 text-center btn btn-outline-success" href="{{route('markets.show', [$market])}}" >show</a>
+                            <a class="m-1 text-center btn btn-warning" href="{{route('markets.edit', [$market])}}">edit</a>
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" value="delete">delete</button></form>
-                        <a href="{{route('markets.products', [$market])}}" class="btn btn-group btn-outline-info">products</a>
+                            <button type="submit" class="m-1 text-center btn btn-danger" value="delete">delete</button></form>
+                        <a href="{{route('markets.products', [$market])}}" class=" m-1 text-center btn btn-group btn-outline-info">products</a>
                     </td>
 
                 </tr>

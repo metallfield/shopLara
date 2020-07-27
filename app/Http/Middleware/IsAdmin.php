@@ -21,7 +21,7 @@ class IsAdmin
             session()->flash('warning', "you have not permission");
             return redirect()->route('home');
         }
-        session()->flash('success', 'hello admin');
+
         return $next($request);
     }
 }

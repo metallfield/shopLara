@@ -14,6 +14,9 @@ class ProductsService
 {
 
 
+    /**
+     * @var \Illuminate\Contracts\Foundation\Application|mixed
+     */
     private $productRepository;
     public function __construct()
     {
@@ -26,6 +29,10 @@ class ProductsService
         return $this->productRepository->getAllProducts($user);
     }
 
+    public function getRecommendProducts()
+    {
+        return $this->productRepository->getRecommendProducts();
+    }
     public function createProduct($data)
     {
 
@@ -61,7 +68,6 @@ class ProductsService
         unset($fields['image']);
         if ($data->has('image') && $data->get('image') !== null)
         {
-
             Storage::delete($product->image);
             $imageName = uniqid().'_'.$data->get('image')->getClientOriginalName();
             $path =  'images/'.$imageName;
@@ -72,14 +78,14 @@ class ProductsService
              $data->get('image')->move(storage_path() . '/app/public/images', $imageName);
          }
         $categories = $data->get('categories');
-            if (isset($categories))
-            {
-                $product->categories()->detach();
-                foreach ($categories as $category) {
-                    $this->productRepository->attachCategory( $product->id ,$category);
-                }
+        if (isset($categories))
+        {
+            $product->categories()->detach();
+            foreach ($categories as $category) {
+                $this->productRepository->attachCategory( $product->id ,$category);
             }
-            return true;
+        }
+        return true;
     }
 
     public function CheckOwner(Product $product)

@@ -16,7 +16,7 @@
             @enderror
             <div class="form-group">
                 <label for="description">description</label>
-                <textarea type="text" name="description" class="form-control" >{{old('description', isset($category)? $category->description : null)}}
+                <textarea type="text" name="description" class="form-control" rows="6">{{old('description', isset($category)? $category->description : null)}}
                 </textarea>
             </div>
             @error('description')

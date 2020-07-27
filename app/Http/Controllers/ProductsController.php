@@ -46,7 +46,6 @@ class ProductsController extends Controller
      */
     public function create()
     {
-
         $categories =  $this->categoriesRepository->getAllCategories();
         return view('products.create', compact('categories'));
     }
@@ -60,9 +59,8 @@ class ProductsController extends Controller
     public function store(PostRequest $request)
     {
         $data = collect($request->all());
-        $result = $this->productsService->createProduct($data);
+         $this->productsService->createProduct($data);
             return redirect()->route('products.index');
-
     }
 
     /**
@@ -73,7 +71,9 @@ class ProductsController extends Controller
      */
     public function show(Product $product)
     {
-        return view('products.show', compact('product'));
+        $recommendProducts = $this->productsService->getRecommendProducts();
+
+        return view('products.show', compact('product', 'recommendProducts'));
     }
 
     /**
@@ -122,6 +122,8 @@ class ProductsController extends Controller
             if ($product->delete()) {
                 return redirect()->back();
             } else {
+                session()->flash('warning', 'can`t delete this product ');
+
                 return false;
             }
         }else{
