@@ -25,7 +25,7 @@
             </div>
 
 <div class="col">
-    <span>price: {{$product->price}}</span><br>
+    <h4>price: {{$product->price}}</h4>
     <span>count: {{$product->count}}</span><br>
     @if(isset($product->categories))
         <span class="font-weight-bold">categories:</span>
@@ -38,10 +38,12 @@
         <p>{{$product->description}}</p>
     </div>
 
-        @if($product->isAvaible())
+         @if($product->isAvaible())
             <button class="btn btn-outline-dark" type="button" data-product="{{$product->id}}" id="addProduct" >add to basket</button>
-        @else
-          <span class="font-weight-bold text-dark">нет в наличии</span>
+
+
+    @else
+          <h3 class="font-weight-bold text-dark">нет в наличии</h3>
         @endif
         @csrf
 
@@ -53,7 +55,7 @@
 
 
      @endif
-
+    <div id="basket_details"></div>
 </div>
 
     </div>

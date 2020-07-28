@@ -22,7 +22,7 @@ class MarketService
     {
         return $this->marketRepository->getAllMarkets($user);
     }
-    public function createMarket($data)
+    public function createMarket($data, User $user)
     {
         $fields['name'] = $data->get('name');
         $fields['description'] = $data->get('description');

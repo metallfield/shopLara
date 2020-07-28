@@ -48,3 +48,6 @@ Route::get('/incomingOrders', 'OrderController@incomingOrders')->name('incomingO
 Route::get('incomingOrderShow/{order}', 'OrderController@incomingOrderShow')->name('incomingOrderShow');
 
 Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post');
+
+
+Route::get('/getBasket', 'BasketController@getBasketForAjax');

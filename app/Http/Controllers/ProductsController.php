@@ -72,7 +72,6 @@ class ProductsController extends Controller
     public function show(Product $product)
     {
         $recommendProducts = $this->productsService->getRecommendProducts();
-
         return view('products.show', compact('product', 'recommendProducts'));
     }
 

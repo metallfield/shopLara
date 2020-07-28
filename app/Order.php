@@ -21,7 +21,6 @@ class Order extends Model
     }
     public static function changeFullSum($changeSum){
         $sum = self::getFullPrice() + $changeSum;
-
         session(['full_order_sum' => $sum]);
     }
     public static function eraseOrderSum(){

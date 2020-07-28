@@ -37,6 +37,13 @@
                             </span>
                         @endforeach
                         <br><span class="text-success font-weight-bold">price: {{$product->price}}</span>
+                        @if($product->isAvaible())
+                            <br>    <button id="addProduct" data-product="{{$product->id}}" class="my-2 btn btn-outline-primary">Add to basket</button>
+                            <div id="basket_details"></div>
+
+                        @else
+                            <h5>not allowed</h5>
+                        @endif
                     </div>
                 @endforeach
 
