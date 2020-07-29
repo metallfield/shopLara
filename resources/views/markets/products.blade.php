@@ -25,7 +25,7 @@
                         {{$product->name}}
                     </td>
                     <td>
-                        {{$product->price}}
+                        {{$product->price}}$
                     </td>
                      <td>
                          @foreach($product->categories as $category)
@@ -34,7 +34,7 @@
                      </td>
                     <td>
                         <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="product-{{$product->id}}" data-product="{{$product->id}}" name="product-{{$product->id}}" @if($market->isAddedProduct($product->id)) checked @endif>
+                            <input type="checkbox" class="custom-control-input" id="product-{{$product->id}}" data-product="{{$product->id}}" name="product-{{$product->id}}" @if($market->products->contains($product)) checked @endif>
                             <label class="custom-control-label" for="product-{{$product->id}}">add product to market</label>
                         </div>
                     </td>

@@ -29,18 +29,18 @@ class MarketService
         $fields['location'] = $data->get('address_address');
         $fields['lat'] = $data->get('address_latitude');
         $fields['lng'] = $data->get('address_longitude');
-        $fields['user_id'] = Auth::id();
+        $fields['user_id'] = $user;
         return $this->marketRepository->createNewMarket($fields);
     }
 
-    public function updateMarket($data, Market $market)
+    public function updateMarket($data, Market $market, User $user)
     {
         $fields['name'] = $data->get('name');
         $fields['description'] = $data->get('description');
         $fields['location'] = $data->get('address_address');
         $fields['lat'] = $data->get('address_latitude');
         $fields['lng'] = $data->get('address_longitude');
-        $fields['user_id'] = Auth::id();
+        $fields['user_id'] = $user;
         $result = $this->marketRepository->updateMarket($fields, $market);
         if ($result)
         {
@@ -49,9 +49,9 @@ class MarketService
             return false;
         }
     }
-    public function checkOwner(Market $market)
+    public function checkOwner(Market $market, User $user)
     {
-        if (Auth::id() === $market->user_id && $market->user_id !== null)
+        if ($user === $market->user_id && $market->user_id !== null)
         {
             return true;
         }
@@ -68,15 +68,34 @@ class MarketService
     {
         return $this->marketRepository->detachProduct($product_id, $market_id);
     }
-    public function getNearestMarkets(Product $product, $lat, $lng, $radius)
+
+    public function getMarketsNearMe($product, $lat, $lng, $radius)
     {
         foreach ($product->markets as $market) {
             $product_markets[] = $market->id;
         }
-        $markets = Market::getByDistant($lat, $lng, $radius);
+        $earth_rad = 6378;
+        $maxLat = $lat + rad2deg($radius/$earth_rad);
+        $maxLon = $lng + rad2deg(asin($radius/$earth_rad) / cos(deg2rad($lat)));
+        $markets = $this->marketRepository->getNearestMarkets($maxLat, $maxLon);
+
         foreach ($markets as $market) {
+            $latitudeFrom = $lat;
+            $longitudeFrom = $lng;
+
+            $latitudeTo = $market->lat;
+            $longitudeTo = $market->lng;
+
+             $theta = $longitudeFrom - $longitudeTo;
+            $dist = sin(deg2rad($latitudeFrom)) * sin(deg2rad($latitudeTo)) +  cos(deg2rad($latitudeFrom)) * cos(deg2rad($latitudeTo)) * cos(deg2rad($theta));
+            $dist = acos($dist);
+            $dist = rad2deg($dist);
+            $miles = $dist * 60 * 1.1515;
+
+            $distance = ($miles * 1.609344);
             if (in_array($market->id, $product_markets))
             {
+                $market['distance'] = $distance;
                 $result[] = $market;
             }
 

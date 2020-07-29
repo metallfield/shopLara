@@ -29,16 +29,16 @@
                         </form>
 
                         <div class=" m-2 col">
-                        <span>price for one: </span>    {{$product->price}}
+                        <span>price for one: </span>{{$product->price}}$
                         </div>
                         <div class="m-2 col">
-                          <span>price for full count: </span>  {{$product->getPriceForCount($product->pivot->count)}}
+                          <span>price for full count: </span>  {{$product->price * $product->pivot->count}}$
                         </div>
 
                     </div>
 
                 @endforeach  <div class="col ml-auto text-right">
-                    Full price: {{$order->getSumOrder()}}
+                    Full price: {{$order->getSumOrder()}}$
                 </div>
             </ul>
         </div>

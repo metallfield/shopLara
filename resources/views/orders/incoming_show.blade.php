@@ -28,14 +28,14 @@
                             <img src="{{Storage::url($product->image)}}" alt="" width="100" height="100"><br>
                             {{$product->name}}
                         </a></td>
-                    <td>{{$product->countProduct()}}</td>
-                    <td>{{$product->price}}</td>
-                    <td>{{$product->getPriceForCount()}}</td>
+                    <td>{{$product->pivot->count}}</td>
+                    <td>{{$product->price}}$</td>
+                    <td>{{$product->price * $product->pivot->count}}$</td>
                 </tr>
                 @endif
             @endforeach
             <tr>
-                <td>full sum order: {{$order->ownerProductsSum()}}</td>
+                <td>full sum order: {{$order->ownerProductsSum(auth()->user())}}$</td>
             </tr>
             </tbody>
         </table>

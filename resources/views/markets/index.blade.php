@@ -12,11 +12,14 @@
                 <th>name</th>
                 <th>description</th>
                 <th>location</th>
+                <th>action</th>
             </tr>
             </thead>
             <tbody>
             @foreach($markets as $market)
-                <tr>
+                <tr >
+                    <div class="row d-flex flex-wrap">
+                    <div class="col">
                     <th scope="row">{{$market->id}}</th>
                     <td>
                         <a href="{{route('marketShow', [$market])}}">    {{$market->name}}</a>
@@ -25,16 +28,19 @@
                         {{$market->description}}
                     </td>
                     <td>{{$market->location}}</td>
-                    <td >
-                        <form action="{{route('markets.destroy', $market)}}" method="POST" class="d-flex flex-column align-items-lg-stretch ">
-                            <a class="m-1 text-center btn btn-outline-success" href="{{route('markets.show', [$market])}}" >show</a>
-                            <a class="m-1 text-center btn btn-warning" href="{{route('markets.edit', [$market])}}">edit</a>
+                    </div>
+                    <div class="">
+                    <th class="">
+                        <form action="{{route('markets.destroy', $market)}}" method="POST" >
+                            <div class="row justify-content-center flex-nowrap ">
+                          <div > <a class="mx-1 text-center btn btn-outline-success" href="{{route('markets.show', [$market])}}" >show</a></div>
+                         <div >  <a class="mx-1 text-center btn btn-warning" href="{{route('markets.edit', [$market])}}">edit</a></div>
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="m-1 text-center btn btn-danger" value="delete">delete</button></form>
-                        <a href="{{route('markets.products', [$market])}}" class=" m-1 text-center btn btn-group btn-outline-info">products</a>
-                    </td>
-
+                        <div >    <button type="submit" class="mx-1 text-center btn btn-danger" value="delete">delete</button></div>
+                     <div > <a href="{{route('markets.products', [$market])}}" class="mx-1  text-center btn btn-group btn-outline-info">products</a>
+                            </div>    </div>
+                        </form></th></div></div>
                 </tr>
             @endforeach
             </tbody>

@@ -59,6 +59,7 @@ class ProductsController extends Controller
     public function store(PostRequest $request)
     {
         $data = collect($request->all());
+        $data['user_id'] = Auth::id();
          $this->productsService->createProduct($data);
             return redirect()->route('products.index');
     }
@@ -71,7 +72,7 @@ class ProductsController extends Controller
      */
     public function show(Product $product)
     {
-        $recommendProducts = $this->productsService->getRecommendProducts();
+        $recommendProducts = $this->productsService->getRecommendProducts($product);
         return view('products.show', compact('product', 'recommendProducts'));
     }
 
@@ -83,7 +84,8 @@ class ProductsController extends Controller
      */
     public function edit(Product $product)
     {
-        $checkOwner = $this->productsService->CheckOwner($product);
+
+        $checkOwner = $this->productsService->CheckOwner($product, Auth::user());
         if ($checkOwner)
         {
             $categories = $this->categoriesRepository->getAllCategories();
@@ -116,7 +118,7 @@ class ProductsController extends Controller
      */
     public function destroy(Product $product)
     {
-        $checkOwner = $this->productsService->CheckOwner($product);
+        $checkOwner = $this->productsService->CheckOwner($product, Auth::user());
         if ($checkOwner) {
             if ($product->delete()) {
                 return redirect()->back();

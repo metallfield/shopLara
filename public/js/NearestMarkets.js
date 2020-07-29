@@ -17,6 +17,7 @@ $(document).ready(function () {
                     let lng = position.coords.longitude;
                     let radius = $('#radius').val();
                     let product_id = $('#product-id').data('id');
+                    console.log([lat, lng]);
                     $.post('/getNearestMarkets', {lat:lat, lng:lng, radius:radius, product_id:product_id }, (data)=>{
                             console.log(JSON.stringify(data));
                             getTmpl(data);

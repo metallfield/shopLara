@@ -6,11 +6,16 @@ namespace App\Services;
 
 use App\Order;
 use App\Product;
+use App\Repositories\OrderRepository;
 use Illuminate\Support\Facades\Auth;
 
 class Basket
 {
     private $order;
+    /**
+     * @var OrderRepository
+     */
+    private $orderRepository;
 
     public function __construct($createOrder = false){
         $orderId = session('orderId');
@@ -24,6 +29,7 @@ class Basket
         }else{
             $this->order= Order::findOrFail($orderId);
         }
+        $this->orderRepository = app(OrderRepository::class);
     }
 
     public function getOrder(){
@@ -47,12 +53,12 @@ class Basket
         }
     }
 
-    public function SaveOrder($name, $address, $email ,$shipping = null){
+    public function SaveOrder($name, $address, $email ,$shipping = null, $order_id){
         if (!$this->countAvailable()) {
             return false;
         }
         $this->changeCount();
-        return $this->order->saveOrder($name, $address, $email, $shipping);
+        return $this->orderRepository->saveOrder($name, $address, $email, $shipping, $order_id);
     }
 
     public function removeProduct(Product $product){

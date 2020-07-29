@@ -5,13 +5,23 @@ namespace App\Http\Controllers;
  use App\Http\Requests\OrderRequest;
  use App\Order;
 use App\Product;
-use App\Services\Basket;
+ use App\Repositories\OrderRepository;
+ use App\Services\Basket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BasketController extends Controller
 {
 
+    /**
+     * @var OrderRepository
+     */
+    private $orderRepository;
+
+    public function __construct(OrderRepository $orderRepository)
+    {
+        $this->orderRepository = $orderRepository;
+    }
 
     public function basket(){
         $order = (new Basket())->getOrder();
@@ -26,6 +36,12 @@ class BasketController extends Controller
          return response()->json($order);
     }
 
+    public function getCountOfProducts()
+    {
+        $order = (new Basket())->getOrder();
+        $count = $this->orderRepository->getCountOfProducts($order);
+        return response()->json($count);
+    }
     public function basketPlace(){
          $basket = new Basket();
         $order = $basket->getOrder();
@@ -45,7 +61,7 @@ class BasketController extends Controller
         }
         if ($request->ajax())
         {
-            return response()->json(['status' => 'success']);
+            return response()->json(['status' => $result]);
         }
         return redirect()->route('basket');
     }

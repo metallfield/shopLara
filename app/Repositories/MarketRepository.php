@@ -21,7 +21,7 @@ class MarketRepository
     }
     public function attachProduct($product_id, $market_id)
     {
-        return Market::find($market_id)->products()->attach($product_id);;
+        return Market::find($market_id)->products()->attach($product_id);
     }
 
     public function detachProduct($product_id, $market_id){
@@ -35,5 +35,10 @@ class MarketRepository
     public function updateMarket($data, Market $market)
     {
         return $market->update($data);
+    }
+
+    public function getNearestMarkets($maxLat, $maxLon)
+    {
+        return Market::with('products')->where([['lat', '<=', $maxLat],['lng', '<=', $maxLon]])->get();
     }
 }

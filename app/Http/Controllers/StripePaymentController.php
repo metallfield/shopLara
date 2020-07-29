@@ -30,10 +30,10 @@ class StripePaymentController extends Controller
                 "source" => $request->stripeToken,
                 "description" => "Test payment from shop.loc."
             ]);
-
-            $success = (new Basket())->saveOrder($name, $billing_address, $email, $shipping);
+            $order_id = session('orderId');
+            $success = (new Basket())->saveOrder($name, $billing_address, $email, $shipping, $order_id);
             if ($success) {
-
+                session()->forget('orderId');
                 session()->flash('success', 'Payment successful!');
                 return redirect()->route('orders.index');
                 }else{

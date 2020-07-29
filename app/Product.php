@@ -9,7 +9,7 @@ class Product extends Model
 {
 
     use softDeletes;
-    protected $guarded = [];
+    protected $fillable = ['name', 'description', 'price', 'image', 'count','user_id'];
 
     public function categories()
     {
@@ -28,31 +28,6 @@ class Product extends Model
     public function orders()
     {
         return $this->belongsToMany(Order::class);
-    }
-
-    public function isSelectedCategory($id)
-    {
-        $categoryArr = [];
-        foreach ($this->categories as $category)
-        {
-            $categoryArr[] = $category->id;
-        }
-
-        if (in_array($id, $categoryArr)){
-
-            return true;
-        }
-    }
-
-    public function getPriceForCount(){
-        if (!is_null($this->pivot)) {
-            return $this->pivot->count * $this->price;
-        }
-        return $this->price;
-    }
-    public function countProduct(){
-
-        return $this->pivot->count;
     }
 
     public function isAvaible(){

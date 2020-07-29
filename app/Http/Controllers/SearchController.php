@@ -35,7 +35,7 @@ class SearchController extends Controller
         $lat = $request->lat;
         $lng = $request->lng;
         $radius =$request->radius ? $request->radius : 200;
-        $result = $this->marketService->getNearestMarkets($product, $lat, $lng, $radius);
+        $result = $this->marketService->getMarketsNearMe($product, $lat, $lng, $radius);
         return response()->json($result);
     }
 }

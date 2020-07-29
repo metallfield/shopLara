@@ -7,7 +7,7 @@
         <div class="row justify-content-center">
             <h1>Подтвердите заказ</h1>
 
-            <span class="w-100 text-center font-weight-bold">full price : {{$order->getSumOrder()}}</span>
+            <h3 class="w-100 text-center font-weight-bold">full price : {{$order->getSumOrder()}}$</h3>
             <div class="col-12 text-center">
 
 
@@ -100,7 +100,7 @@
                     <input type="text" name="amount" value="{{$order->getSumOrder()}}" hidden>
                     <div class="row">
                         <div class="col-xs-12">
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ({{$order->getSumOrder()}})</button>
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ({{$order->getSumOrder()}})$</button>
                         </div>
                     </div>
                 @csrf

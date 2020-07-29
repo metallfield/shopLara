@@ -55,7 +55,8 @@ private $marketService;
     {
 
         $data = collect($request->all());
-        $result = $this->marketService->createMarket($data);
+        $user_id = Auth::user();
+        $result = $this->marketService->createMarket($data, $user_id);
         if ($result)
         {
             return redirect()->route('markets.index');
@@ -81,7 +82,7 @@ private $marketService;
      */
     public function edit(Market $market)
     {
-        if ($this->marketService->checkOwner($market))
+        if ($this->marketService->checkOwner($market, Auth::user()))
         {
             return view('markets.edit', compact('market'));
         }else{
@@ -99,9 +100,10 @@ private $marketService;
      */
     public function update(Request $request, Market $market)
     {
-        if ($this->marketService->checkOwner($market)) {
+        if ($this->marketService->checkOwner($market, Auth::user())) {
             $data = collect($request->all());
-            $result = $this->marketService->updateMarket($data, $market);
+            $user = Auth::user();
+            $result = $this->marketService->updateMarket($data, $market, $user);
             if ($result) {
                 return redirect()->route('markets.index');
             } else {
@@ -120,7 +122,7 @@ private $marketService;
      */
     public function destroy(Market $market)
     {
-        if ($this->marketService->checkOwner($market)) {
+        if ($this->marketService->checkOwner($market, Auth::user())) {
             if ($market->delete()) {
                 return redirect()->route('markets.index');
             } else {
@@ -147,7 +149,7 @@ private $marketService;
         {
             return response()->json(['status' => 'success']);
         }else{
-            return false;
+            return response()->json(['status' => 'fail']);
         }
     }
 
@@ -160,7 +162,7 @@ private $marketService;
         {
             return response()->json(['status' => 'success']);
         }else{
-            return false;
+            return response()->json(['status' => 'fail']);
         }
     }
 }

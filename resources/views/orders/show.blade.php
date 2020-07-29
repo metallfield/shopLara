@@ -32,13 +32,13 @@
                             <img src="{{Storage::url($product->image)}}" alt="" width="100" height="100"><br>
                          <span class="my-2 text-center text-dark">  {{substr($product->name, 0 , 40)}}</span>
             </a></td>
-                    <td>{{$product->countProduct()}}</td>
-                    <td>{{$product->price}}</td>
-                    <td>{{$product->getPriceForCount()}}</td>
+                    <td>{{$product->pivot->count}}</td>
+                    <td>{{$product->price}}$</td>
+                    <td>{{$product->price * $product->pivot->count}}$</td>
                 </tr>
             @endforeach
             <tr>
-                <td>full sum order: {{$order->getSumOrder()}}</td>
+                <td>full sum order: {{$order->getSumOrder()}}$</td>
             </tr>
             </tbody>
         </table>

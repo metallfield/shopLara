@@ -26,7 +26,7 @@
                     <td>{{$order->address}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->updated_at->format('H:m:s D/M/Y')}}</td>
-                    <td>{{$order->getSumOrder()}}</td>
+                    <td>{{$order->getSumOrder()}}$</td>
                     <td> <a href="{{route('orders.show', $order)}}" class="btn btn-outline-success">open</a>
                             </td>
                 </tr>

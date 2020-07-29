@@ -24,7 +24,7 @@
             <div class="form-group">
                 <select name="categories[]" id="categories" multiple="multiple" class="form-control" >
                     @foreach($categories as $category)
-                        <option value="{{$category->name}}" @if($product->isSelectedCategory($category->id)) selected @endif>{{$category->name}}</option>
+                        <option value="{{$category->name}}" @if($product->categories->contains($category)) selected @endif>{{$category->name}}</option>
                     @endforeach
                 </select>
             </div>

@@ -36,18 +36,15 @@
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                        <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto text-capitalize">
                         <!-- Authentication Links -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('markets')}}">markets</a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('categories')}}">categories</a>
                         </li>
                         <li class="nav-item  ">
-                            <a class="nav-link" href="{{ route('basket')}}">Basket</a>
+                            <a class="nav-link" href="{{ route('basket')}}" id="showBasket" role="button">Basket <span id="countOfProd" class=""></span></a>
                         </li>
                         @guest
                             <li class="nav-item">
@@ -61,29 +58,6 @@
                         @else   <li class="nav-item">
                             <a class="nav-link" href="{{route('orders.index')}}">my orders </a>
                         </li>
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                   dashboard <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('products.index') }}">
-                                       products edit
-                                    </a> <a class="dropdown-item" href="{{ route('markets.index') }}">
-                                        markets edit
-                                    </a>
-                                   <a class="dropdown-item" href="{{ route('incomingOrders') }}">
-                                        incoming orders
-                                    </a>
-                                    @admin
-                                    <a class="dropdown-item" href="{{ route('categories.index') }}">
-                                            categories edit
-                                    </a>
-                                    @endadmin
-                                </div>
-
-                            </li>
-
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -102,16 +76,29 @@
                                 </div>
                             </li>
                         @endguest
-                        <li class="nav-item ">
-                            <form action="/search">
-                                <div class="form-inline">
-                                    <input type="text" name="query" id="query" value="{{request()->input('query')}}">
-                                    <button type="submit" class="mx-2 btn btn-outline-info rounded-circle"><i class="fa fa-search"></i></button>
-                                </div>
 
-                            </form>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                dashboard <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('products.index') }}">
+                                    products edit
+                                </a> <a class="dropdown-item" href="{{ route('markets.index') }}">
+                                    markets edit
+                                </a>
+                                <a class="dropdown-item" href="{{ route('incomingOrders') }}">
+                                    incoming orders
+                                </a>
+                                @admin
+                                <a class="dropdown-item" href="{{ route('categories.index') }}">
+                                    categories edit
+                                </a>
+                                @endadmin
+                            </div>
+
                         </li>
-
                     </ul>
                 </div>
         </nav>

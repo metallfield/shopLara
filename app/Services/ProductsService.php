@@ -29,15 +29,15 @@ class ProductsService
         return $this->productRepository->getAllProducts($user);
     }
 
-    public function getRecommendProducts()
+    public function getRecommendProducts(Product $product)
     {
-        return $this->productRepository->getRecommendProducts();
+        return $this->productRepository->getRecommendProducts($product);
     }
     public function createProduct($data)
     {
 
         $fields = $data->except('categories');
-        $fields['user_id'] = Auth::id();
+        $fields['user_id'] = $data['user_id'];
         unset($fields['image']);
         if ($data->has('image'))
         {
@@ -88,9 +88,10 @@ class ProductsService
         return true;
     }
 
-    public function CheckOwner(Product $product)
+    public function CheckOwner(Product $product, User $user)
     {
-        if (Auth::id() === $product->user_id && $product->user_id !== null)
+
+        if ($user->id === $product->user_id && $product->user_id !== null)
         {
             return true;
         }

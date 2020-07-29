@@ -11,11 +11,13 @@ class Order extends Model
     public function  products(){
         return $this->belongsToMany(Product::class)->withPivot('count')->withTimestamps();
     }
-
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
     public function getSumOrder(){
         $sum = 0;
         foreach($this->products()->withTrashed()->get() as $product){
-            $sum += $product->getPriceForCount();
+            $sum += $product->price * $product->pivot->count;
         }
         return $sum;
     }
@@ -32,8 +34,8 @@ class Order extends Model
     }
     public function countOfProducts(){
         $count = 0;
-        foreach($this->products as $product){
-            $count+= $product->countProduct();
+        foreach($this->products->load('orders') as $product){
+            $count+= $product->pivot->count;
         }
         if ($count > 0) {
             return "Count of products: " . $count;
@@ -43,37 +45,18 @@ class Order extends Model
         }
 
     }
-    public function saveOrder($name, $address, $email, $shipping = null){
-        if ($this->status == 0) {
-            $this->name = $name;
-            $this->address = $address;
-            $this->email = $email;
-            $this->shipping_address =  $shipping ? $shipping : null;
-            $this->user_id = Auth::id();
-            $this->status = 1;
-            $this->save();
-            session()->forget('orderId');
 
-            return true;
-        }else{
-            return false;
-        }
-
-    }
     public function scopeActive($query){
         return $query->where('status', '=', 1);
     }
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
 
-    public function ownerProductsSum()
+    public function ownerProductsSum(User $user)
     {
         $sum = 0;
         foreach($this->products()->withTrashed()->get() as $product){
-            if (Auth::user()->products->contains($product))
+            if ($user->products->contains($product))
             {
-                $sum += $product->getPriceForCount();
+                $sum += $product->price * $product->pivot->count;
             }
         }
         return $sum;

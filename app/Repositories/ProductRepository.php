@@ -18,9 +18,10 @@ class ProductRepository
         }
         return $query->paginate(6);
     }
-    public function getRecommendProducts()
+    public function getRecommendProducts(Product $product)
     {
-        return Product::with('categories')->inRandomOrder()->take(3)->get();
+        $category = $product->categories->first();
+        return $category->products->load('categories') ? $category->products->take(3) : null ;
     }
     public function getAllProductsForFilter()
     {
@@ -51,8 +52,7 @@ class ProductRepository
         $category = Category::where('name', $category)->select('id')->first();
         if ($category)
         {
-             Product::find($product)->categories()->attach($category);
-             return true;
+            return Product::find($product)->categories()->attach($category);
         }
     }
 
@@ -63,7 +63,14 @@ class ProductRepository
             return true;
         }
         else{
-            return null;
+            return false;
         }
+    }
+    public function getPriceForCount(Product $product)
+    {
+        if (!is_null($product->pivot)) {
+            return $product->pivot->count * $product->price;
+        }
+        return $product->price;
     }
 }

@@ -12,7 +12,7 @@
                 <button type="button" class=" mt-4 btn btn-outline-info" id="nearest">find market near me</button>
                 <div class="m-2 custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input " name="setRadius" id="setRadius" >
-                    <label class="custom-control-label" for="setRadius">set distance</label>
+                    <label class="custom-control-label" for="setRadius">set distance in kilometers</label>
                 </div>
                 <script id="markets" type="text/x-jquery-tmpl">
             <li><a href="{{route('markets.show', [$market ?? ''])}}}">${name}</a>: ${distance}</li>
@@ -25,7 +25,7 @@
             </div>
 
 <div class="col">
-    <h4>price: {{$product->price}}</h4>
+    <h4>price: {{$product->price}}$</h4>
     <span>count: {{$product->count}}</span><br>
     @if(isset($product->categories))
         <span class="font-weight-bold">categories:</span>

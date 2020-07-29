@@ -11,13 +11,19 @@
 @section('title', 'search')
 @section('content')
     <div class="container">
-        <h1>home page</h1>                <div class="card-body">
+        <h1>Search results: </h1>                <div class="card-body">
             @if (session('status'))
                 <div class="alert alert-success" role="alert">
                     {{ session('status') }}
                 </div>
             @endif
+                <form action="/search">
+                    <div class="form-inline">
+                        <input type="text" name="query" id="query" value="{{request()->input('query')}}">
+                        <button type="submit" class="mx-2 btn btn-outline-info rounded-circle"><i class="fa fa-search"></i></button>
+                    </div>
 
+                </form>
 
             <div class="row justify-content-center">
 
@@ -33,7 +39,7 @@
                            <a href="{{route('category-show', [$category])}}" class="text-white"> {{$category->name}}</a>
                             </span>
                         @endforeach
-                        <br><span class="text-success font-weight-bold">price: {{$product->price}}</span>
+                        <br><span class="text-success font-weight-bold">price: {{$product->price}}$</span>
                     </div>
                 @endforeach
                 @else

@@ -76,7 +76,7 @@ class HomeController
     }
     public function ProductShow(Product $product)
     {
-        $recommendProducts = $this->productsRepository->getRecommendProducts();
+        $recommendProducts = $this->productsRepository->getRecommendProducts($product);
         return view('products.show', compact('product', 'recommendProducts'));
     }
     public function MarketShow(Market $market)

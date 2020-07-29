@@ -27,7 +27,7 @@
                     <td>{{$order->address}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->updated_at->format('H:m:s D/M/Y')}}</td>
-                    <td>{{$order->ownerProductsSum()}}</td>
+                    <td>{{$order->ownerProductsSum(auth()->user())}}$</td>
                     <td> <a href="{{route('incomingOrderShow', $order)}}" class="btn btn-outline-success">open</a>
                     </td>
                 </tr>

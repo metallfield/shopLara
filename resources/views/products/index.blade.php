@@ -28,7 +28,7 @@
                             {{$category->name}}
                         @endforeach
                     </td>
-                    <td>{{$product->price}}</td>
+                    <td>{{$product->price}}$</td>
                     <td>{{$product->count}}</td>
                     <td>
                         <form action="{{route('products.destroy', $product)}}" method="POST"><a href="{{route('products.show', [$product])}}" class="btn btn-outline-success">show</a>

@@ -15,7 +15,8 @@
 #basket{
     z-index: 3  ;
     top: 0;
-    left: 0;
+
+
     background-color: rgba(29, 33, 36, 0.9);
     font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
     text-transform: capitalize;
