@@ -104,7 +104,11 @@ $(document).ready(function () {
     {
          $.get('/getCountOfProducts').done((data)=>{
            console.log(data);
-           $('#countOfProd').html('<span class="mx-1 p-1 border rounded-circle bg-warning text-center font-weight-bolder" >'+ data + '</span>');
+           if (data >= 0)
+           {
+               $('#countOfProd').html('<span class="mx-1 p-1 border rounded-circle bg-warning text-center font-weight-bolder" >'+ data + '</span>');
+
+           }
         });
     }
     getCountOfProducts();
