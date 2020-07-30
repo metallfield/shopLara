@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\Auth;
 class OrderRepository
 {
 
+    public function create($data)
+    {
+        return  Order::create($data);
+    }
+    public function findOrder($orderId)
+    {
+            return   Order::findOrFail($orderId);
+    }
     public function getMyOrders(User $user)
     {
         return  $user->orders()->Active()->paginate(6);

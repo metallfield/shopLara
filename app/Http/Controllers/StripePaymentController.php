@@ -40,7 +40,7 @@ class StripePaymentController extends Controller
                 session()->flash('warning', 'шо то не так');
                 return redirect()->back();
             }
-                Order::eraseOrderSum();
+                 session()->forget('full_order_sum');
 
     }
 }

@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+
     <h1 class="text-capitalize">home page</h1>                <div class="card-body">
         @if (session('status'))
             <div class="alert alert-success" role="alert">

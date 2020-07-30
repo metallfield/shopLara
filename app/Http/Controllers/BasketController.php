@@ -24,13 +24,13 @@ class BasketController extends Controller
     }
 
     public function basket(){
-        $order = (new Basket())->getOrder();
+        $order = (new Basket(Auth::user()))->getOrder();
           return view('basket', compact('order'));
     }
 
     public function getBasketForAjax()
     {
-        $order = (new Basket())->getOrder();
+        $order = (new Basket(Auth::user()))->getOrder();
         $products = $order->products;
 
          return response()->json($order);
@@ -38,12 +38,12 @@ class BasketController extends Controller
 
     public function getCountOfProducts()
     {
-        $order = (new Basket())->getOrder();
+        $order = (new Basket(Auth::user()))->getOrder();
         $count = $this->orderRepository->getCountOfProducts($order);
         return response()->json($count);
     }
     public function basketPlace(){
-         $basket = new Basket();
+         $basket = new Basket(Auth::user());
         $order = $basket->getOrder();
         if (!$basket->countAvailable()) {
             session()->flash('warning', 'product not avaible ');
@@ -53,9 +53,11 @@ class BasketController extends Controller
     }
 
     public function  basketAdd(Product $product, Request $request){
-        $result =  (new Basket(true))->addProduct($product);
+        $result =  (new Basket(Auth::user(),true))->addProduct($product);
         if ($result) {
             session()->flash('success', 'product been added ' . $product->name);
+            $sum = session('full_order_sum') + $product->price;
+            session(['full_order_sum' => $sum]);
         }else{
             session()->flash('warning', 'product not avaible ' . $product->name);
         }
@@ -67,8 +69,13 @@ class BasketController extends Controller
     }
 
     public function basketRemove(Product $product){
-        (new Basket())->removeProduct($product);
-        session()->flash('warning', 'product been deleted ' . $product->name);
-        return redirect()->route('basket');
+      $result =  (new Basket(Auth::user()))->removeProduct($product);
+      if ($result)
+      {
+          $sum = session('full_order_sum') - $product->price;
+          session(['full_order_sum' => $sum]);
+          session()->flash('warning', 'product been deleted ' . $product->name);
+          return redirect()->route('basket');
+      }
     }
 }

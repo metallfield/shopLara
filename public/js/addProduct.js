@@ -41,6 +41,9 @@ $(document).ready(function () {
                    '<button class="btn btn-outline-success rounded-circle" id="addProd" data-product="'+product.id+'"><i  class="fa fa-plus"></i></button></div></div>';
                $('#product_list').append(product_tmpl);
             });
+        }).fail(function () {
+            $('#product_list').html('<h3 class="text-center">Your basket is empty now</h3>');
+
         });
     }
     function make_dialog()
@@ -92,7 +95,6 @@ $(document).ready(function () {
         e.preventDefault();
         make_dialog();
         $("#basket").show();
-
     });
     $('body').click(function(e) {
         if (!$(e.target).closest('#basket_details').length){

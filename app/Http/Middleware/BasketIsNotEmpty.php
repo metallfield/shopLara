@@ -17,7 +17,7 @@ class BasketIsNotEmpty
     public function handle($request, Closure $next)
     {
         $orderId = session('orderId');
-        if (!is_null($orderId) && Order::getFullPrice() > 0) {
+        if (!is_null($orderId) && session('full_order_sum', 0) > 0) {
             return $next($request);
         }
         session()->flash('warning', 'basket is empty');

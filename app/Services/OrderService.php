@@ -24,9 +24,9 @@ class OrderService
     {
         return $this->orderRepository->getMyOrders($user);
     }
-    public function getIncomingOrders()
+    public function getIncomingOrders(User $user)
     {
-        foreach (Auth::user()->products as $product)
+        foreach ($user->products->load('user') as $product)
         {
             if ($product->orders->count() > 0)
             {

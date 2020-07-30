@@ -31,7 +31,7 @@ class OrderController extends Controller
 
     public function incomingOrders()
     {
-        $orders = $this->orderService->getIncomingOrders();
+        $orders = $this->orderService->getIncomingOrders(Auth::user());
 
         return view('orders.incoming', compact('orders'));
     }

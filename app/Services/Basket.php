@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Order;
 use App\Product;
 use App\Repositories\OrderRepository;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class Basket
@@ -17,19 +18,20 @@ class Basket
      */
     private $orderRepository;
 
-    public function __construct($createOrder = false){
+    public function __construct(User $user ,$createOrder = false){
+        $this->orderRepository = app(OrderRepository::class);
         $orderId = session('orderId');
         if(is_null($orderId) && $createOrder){
             $data = [];
-            if (Auth::check()) {
-                $data['user_id'] = Auth::id();
+            if (isset($user)) {
+                $data['user_id'] = $user->id;
             }
-            $this->order = Order::create([$data]);
+            $this->order = $this->orderRepository->create($data);
             session(['orderId' => $this->order->id]);
         }else{
-            $this->order= Order::findOrFail($orderId);
+            $this->order= $this->orderRepository->findOrder($orderId);
         }
-        $this->orderRepository = app(OrderRepository::class);
+
     }
 
     public function getOrder(){
@@ -72,7 +74,7 @@ class Basket
                 $pivotRow->update();
             }
         }
-        Order::changeFullSum(-$product->price);
+        return true;
     }
 
     public function addProduct(Product $product){
@@ -89,7 +91,7 @@ class Basket
             }
             $this->order->products()->attach($product->id);
         }
-        Order::changeFullSum($product->price);
+
         return true;
     }
 }

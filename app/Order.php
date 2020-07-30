@@ -21,17 +21,7 @@ class Order extends Model
         }
         return $sum;
     }
-    public static function changeFullSum($changeSum){
-        $sum = self::getFullPrice() + $changeSum;
-        session(['full_order_sum' => $sum]);
-    }
-    public static function eraseOrderSum(){
-        session()->forget('full_order_sum');
-    }
-    public static function getFullPrice(){
 
-        return session('full_order_sum', 0);
-    }
     public function countOfProducts(){
         $count = 0;
         foreach($this->products->load('orders') as $product){
@@ -45,11 +35,9 @@ class Order extends Model
         }
 
     }
-
     public function scopeActive($query){
         return $query->where('status', '=', 1);
     }
-
     public function ownerProductsSum(User $user)
     {
         $sum = 0;
