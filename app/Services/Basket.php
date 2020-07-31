@@ -35,7 +35,7 @@ class Basket
     }
 
     public function getOrder(){
-        return $this->order;
+        return $this->order ? $this->order : null;
     }
     protected function getPivot($product){
         return  $this->order->products()->where('product_id', $product->id)->first()->pivot;

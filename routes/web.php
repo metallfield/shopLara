@@ -23,6 +23,7 @@ Route::resource('products', 'ProductsController');
 Route::resource('categories', 'CategoriesController');
 Route::resource('markets', 'MarketController');
 
+Route::get('getProducts', 'HomeController@getProducts');
 Route::get('/productShow/{product}', 'HomeController@ProductShow')->name('productShow');
 Route::get('/marketShow/{market}', 'HomeController@MarketShow')->name('marketShow');
 Route::get('markets/{market}/products', 'MarketController@MarketProducts')->name('markets.products');

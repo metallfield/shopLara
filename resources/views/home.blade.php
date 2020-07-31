@@ -49,7 +49,6 @@
                         @if($product->isAvaible())
                             <br>    <button id="addProduct" data-product="{{$product->id}}" class="my-2 btn btn-outline-primary">Add to basket</button>
                             <div id="basket_details"></div>
-
                         @else
                             <h5>not allowed</h5>
                         @endif

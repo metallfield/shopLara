@@ -20,16 +20,9 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('blog-post', {
-    props: ['post', 'postFontSize'],
-    template: `
-    <div class="blog-post">
-      <span>{{ post.title }}</span>
-      <button v-on:click="$emit('enlarge-text', 2.1)">
-        Увеличить размер текста
-      </button>
-     </div>`
-});
+Vue.component('products', require('./components/ProductsComponent.vue').default);
+Vue.component('pagination-component', require('./components/PaginationComponent').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -39,20 +32,8 @@ Vue.component('blog-post', {
 
 
   new Vue({
-    el: '#blog-posts-events-demo',
-    data: {
-            posts : [
-                { id: 1, title: 'My journey with Vue' },
-                { id: 2, title: 'Blogging with Vue' },
-                { id: 3, title: 'Why Vue is so fun' }
-            ],
-        postFontSize : 1
-    },
-      methods: {
-          onEnlargeText: function (enlargeAmount) {
-              this.postFontSize += enlargeAmount
-          }
-      }
+    el: '#products',
+
 
 });
 

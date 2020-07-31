@@ -16,7 +16,7 @@ class ProductRepository
         if($user !== null) {
             $query->where('user_id', $user->id);
         }
-        return $query->paginate(6);
+        return $query->paginate(9);
     }
     public function getRecommendProducts(Product $product)
     {

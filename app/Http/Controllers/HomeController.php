@@ -10,6 +10,7 @@ use App\Repositories\MarketRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController
@@ -47,7 +48,7 @@ class HomeController
      */
     public function index(Request $request)
     {
-        $productsQuery = $this->productsRepository->getAllProductsForFilter();
+         $productsQuery = $this->productsRepository->getAllProductsForFilter();
         if ($request->filled('price_from')) {
             $productsQuery->where('price', '>=', $request->price_from)->orderBy('price');
         }
@@ -59,6 +60,17 @@ class HomeController
         return view('home', ['products' => $products]);
     }
 
+    public function getProducts(Request $request)
+        {
+         $products = $this->productsRepository->getAllProducts();
+
+        if ($request->ajax() )
+        {
+            return response()->json($products);
+        }
+        return view('vue');
+
+    }
     public function markets()
     {
         $markets = $this->marketsRepository->getAllMarkets();
