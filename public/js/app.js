@@ -1995,6 +1995,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdminCategoryComponent",
   props: {
@@ -6782,7 +6791,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-edit[data-v-f8137b8a]{\n    z-index: 10;\n}\n", ""]);
+exports.push([module.i, "\n.modal-mask[data-v-f8137b8a] {\n    position: fixed;\n    z-index: 9998;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper[data-v-f8137b8a] {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container[data-v-f8137b8a] {\n    width: 500px;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 2px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3[data-v-f8137b8a] {\n    margin-top: 0;\n    color: #42b983;\n}\n.modal-body[data-v-f8137b8a] {\n    margin: 20px 0;\n}\n.modal-default-button[data-v-f8137b8a] {\n    float: right;\n}\n\n/*\n * The following styles are auto-applied to elements with\n * transition=\"modal\" when their visibility is toggled\n * by Vue.js.\n *\n * You can easily play with the modal transition by editing\n * these styles.\n */\n.modal-enter[data-v-f8137b8a] {\n    opacity: 0;\n}\n.modal-leave-active[data-v-f8137b8a] {\n    opacity: 0;\n}\n.modal-enter .modal-container[data-v-f8137b8a],\n.modal-leave-active .modal-container[data-v-f8137b8a] {\n    transform: scale(1.1);\n}\n\n", ""]);
 
 // exports
 
@@ -38654,110 +38663,120 @@ var render = function() {
     _vm.edit
       ? _c(
           "div",
-          {
-            staticClass:
-              "modal-edit position-absolute p-4 border bg-dark d-flex flex-column w-75"
-          },
           [
-            _c(
-              "button",
-              {
-                staticClass: "ml-auto btn btn-outline-danger rounded-circle",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    ;(_vm.edit = !_vm.edit), (_vm.updated = false)
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fa fa-close" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.editCategory($event)
-                  }
-                }
-              },
-              [
-                _vm.updated
-                  ? _c("p", { staticClass: "alert alert-success" }, [
-                      _vm._v("category updated success")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.category.name,
-                      expression: "category.name"
-                    }
-                  ],
-                  staticClass: "form-control my-2",
-                  attrs: { type: "text", name: "name" },
-                  domProps: { value: _vm.category.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.category, "name", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "textarea",
-                  {
-                    directives: [
+            _c("transition", { attrs: { name: "modal" } }, [
+              _c("div", { staticClass: "modal-mask" }, [
+                _c("div", { staticClass: "modal-wrapper" }, [
+                  _c("div", { staticClass: "modal-container" }, [
+                    _c(
+                      "button",
                       {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.category.description,
-                        expression: "category.description"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      name: "description",
-                      id: "",
-                      cols: "30",
-                      rows: "10"
-                    },
-                    domProps: { value: _vm.category.description },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                        staticClass:
+                          "ml-auto btn btn-outline-danger rounded-circle",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            ;(_vm.edit = !_vm.edit), (_vm.updated = false)
+                          }
                         }
-                        _vm.$set(
-                          _vm.category,
-                          "description",
-                          $event.target.value
+                      },
+                      [_c("i", { staticClass: "fa fa-close" })]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "form",
+                      {
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.editCategory($event)
+                          }
+                        }
+                      },
+                      [
+                        _vm.updated
+                          ? _c("p", { staticClass: "alert alert-success" }, [
+                              _vm._v("category updated success")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.category.name,
+                              expression: "category.name"
+                            }
+                          ],
+                          staticClass: "form-control my-2",
+                          attrs: { type: "text", name: "name" },
+                          domProps: { value: _vm.category.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.category,
+                                "name",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "textarea",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.category.description,
+                                expression: "category.description"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              name: "description",
+                              id: "",
+                              cols: "30",
+                              rows: "10"
+                            },
+                            domProps: { value: _vm.category.description },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.category,
+                                  "description",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.category.description))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "m-2 btn-primary ",
+                            attrs: { type: "submit" }
+                          },
+                          [_vm._v("update")]
                         )
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.category.description))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "m-2 btn-primary ",
-                    attrs: { type: "submit" }
-                  },
-                  [_vm._v("update")]
-                )
-              ]
-            )
-          ]
+                      ]
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ],
+          1
         )
       : _vm._e(),
     _vm._v(" "),
