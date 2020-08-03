@@ -28,6 +28,11 @@ class CategoriesController extends Controller
         return view('categories.index', compact('categories'));
     }
 
+    public function getCategories()
+    {
+        $categories = $this->categoriesRepository->getAllCategories();
+        return response()->json($categories);
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -54,6 +54,7 @@ Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post')
 Route::get('/getBasket', 'BasketController@getBasketForAjax');
 Route::get('/getCountOfProducts', 'BasketController@getCountOfProducts');
 
+Route::get('/getCategories', 'CategoriesController@getCategories');
 Route::get('/vue', function (){
     return view('vue');
 });

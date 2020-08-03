@@ -63,13 +63,7 @@ class HomeController
     public function getProducts(Request $request)
         {
          $products = $this->productsRepository->getAllProducts();
-
-        if ($request->ajax() )
-        {
             return response()->json($products);
-        }
-        return view('vue');
-
     }
     public function markets()
     {

@@ -6,7 +6,9 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from 'vue';
+
+window.Bus = new Vue();
 
 /**
  * The following block of code may be used to automatically register your
@@ -22,6 +24,10 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('products', require('./components/ProductsComponent.vue').default);
 Vue.component('pagination-component', require('./components/PaginationComponent').default);
+Vue.component('product-component', require('./components/ProductComponent').default);
+Vue.component('admin-categories-component', require('./components/AdminCategoriesComponent').default);
+Vue.component('admin-category-component', require('./components/AdminCategoryComponent').default);
+Vue.component('create-category-component', require('./components/CreateCategoryComponent').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,6 +35,9 @@ Vue.component('pagination-component', require('./components/PaginationComponent'
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+new Vue({
+    el: '#adminCats'
+})
 
 
   new Vue({
