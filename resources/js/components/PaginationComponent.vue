@@ -61,6 +61,7 @@
                 type: Number,
                 default: 4
             },
+            query: ''
         },
         data(){
             return{
@@ -111,7 +112,7 @@
                 return this.current_page === page;
             },
             getProductsStats() {
-                let url =  '/getProducts?page=' + this.current_page;
+                let url =  this.query + this.current_page;
                 axios.get(url)
                     .then(({data}) => {
                         this.last_page = data.last_page;
@@ -121,6 +122,8 @@
             onPageChange(page) {
                 this.current_page = page;
                 Bus.$emit('get-products' , this.current_page);
+                Bus.$emit('getCategories' , this.current_page);
+
             },
 
         }

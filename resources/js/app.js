@@ -28,6 +28,8 @@ Vue.component('product-component', require('./components/ProductComponent').defa
 Vue.component('admin-categories-component', require('./components/AdminCategoriesComponent').default);
 Vue.component('admin-category-component', require('./components/AdminCategoryComponent').default);
 Vue.component('create-category-component', require('./components/CreateCategoryComponent').default);
+Vue.component('admin-products-component', require('./components/AdminProductsComponent').default);
+Vue.component('admin-product-component', require('./components/AdminProductComponent').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -39,6 +41,9 @@ new Vue({
     el: '#adminCats'
 })
 
+new Vue({
+    el: '#adminProducts'
+})
 
   new Vue({
     el: '#products',

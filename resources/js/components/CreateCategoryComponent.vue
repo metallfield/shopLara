@@ -22,7 +22,7 @@
                 description: ''
             }
         },
-        methods:{
+         methods:{
             createCategory(){
                 axios.post('/categories', {
                     name : this.name,

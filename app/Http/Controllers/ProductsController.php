@@ -131,4 +131,9 @@ class ProductsController extends Controller
             return redirect()->back();
         }
     }
+    public function getProducts()
+    {
+        $products = $this->productsService->getAllProducts(Auth::user());
+        return response()->json($products);
+    }
 }

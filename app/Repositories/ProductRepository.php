@@ -49,7 +49,7 @@ class ProductRepository
     }
     public function attachCategory($product,  $category)
     {
-        $category = Category::where('name', $category)->select('id')->first();
+        $category = Category::where('id', $category)->select('id')->first();
         if ($category)
         {
             return Product::find($product)->categories()->attach($category);

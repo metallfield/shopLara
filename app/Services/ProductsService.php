@@ -69,7 +69,8 @@ class ProductsService
         if ($data->has('image') && $data->get('image') !== null)
         {
             Storage::delete($product->image);
-            $imageName = uniqid().'_'.$data->get('image')->getClientOriginalName();
+            $image = $data->get('imageName');
+            $imageName = uniqid().'_'.$image;
             $path =  'images/'.$imageName;
             $fields['image'] = $path;
         }

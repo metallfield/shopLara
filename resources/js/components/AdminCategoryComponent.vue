@@ -23,7 +23,7 @@
             {{category.name}}
         </td>
         <td>
-            {{category.description}}
+            {{preview}}<template v-if="category.description.length>100">&hellip;</template>
         </td>
         <td class="row">
             <button @click="edit = !edit " class="mx-2 btn btn-outline-success">edit</button>
@@ -43,6 +43,11 @@
             return {
                 edit: false,
                 updated: false
+            }
+        },
+        computed : {
+            preview() {
+                return this.category.description.slice(0, 100);
             }
         },
         methods:{

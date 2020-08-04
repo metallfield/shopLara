@@ -17,30 +17,40 @@
           </tr>
           </tbody>
       </table>
+      <pagination-component :offset="6"
+                            :query="query"
+      />
   </div>
 </template>
 
 <script>
 
     import CreateCategoryComponent from "./CreateCategoryComponent";
-     export default {
+      export default {
         name: "AdminCategoriesComponent",
         components: {CreateCategoryComponent},
         data(){
             return{
-                categories: []
+                categories: [],
+
+                query: '/getCategories?=page'
             }
         },
         created() {
             Bus.$on('getCategories',  this.getCategories);
-            this.getCategories();
+
         },
-        methods:{
-            getCategories(){
-                axios.get('/getCategories')
+         destroyed() {
+           Bus.$off('getCategories');
+         },
+         methods:{
+            getCategories(page){
+                let url = '/getCategories?page='+ page;
+                axios.get(url)
                 .then(({data})=>{
                     console.log(data.data);
                     this.categories = data.data;
+
                 })
             }
         }
