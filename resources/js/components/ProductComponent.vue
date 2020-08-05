@@ -6,15 +6,21 @@
     <br><span class="badge badge-info mx-1" v-for="category in product.categories">
                     {{category.name}}
                 </span>
-    <br> <button v-if="product.count > 0" id="addProduct" :data-product="product.id" class="my-2 btn btn-outline-primary">Add to basket</button>
-    <h5 v-else>product not allowed</h5>
+    <br> <div id="addBasket"><add-product v-if="product.count > 0"
+                        :product="product"
+    />
+    <h5 v-else>product not allowed</h5></div>
     <div id="basket_details"></div>
     </div>
 </template>
 
 <script>
+    import AddProductComponent from "./AddProductComponent";
     export default {
         name: "ProductComponent",
+        components: {
+          AddProductComponent
+        },
         props: {
             product: {
                 type: Object

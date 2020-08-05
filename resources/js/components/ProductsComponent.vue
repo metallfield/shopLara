@@ -8,42 +8,40 @@
         <div class="row" v-else>
             Loading...
         </div>
-     <pagination-component :offset="6"></pagination-component>
+     <pagination-component :query="query"
+         :offset="6"></pagination-component>
     </div>
 </template>
-
-<script>
+ <script>
     import PaginationComponent from "./PaginationComponent";
     import ProductComponent from "./ProductComponent";
-    export default {
+    import {mapState} from "vuex";
+     export default {
         name: "ProductsComponent",
         components: {ProductComponent, PaginationComponent},
 
+
         data: function() {
             return {
-                 products: [],
-                errors: null
+                errors: null,
+                query : '/getProducts?page='
             }
         },
         created() {
-            Bus.$on('get-products', this.get_products);
-        },
+            Bus.$on('getProducts', this.get_products);
+            },
 
         destroyed() {
             Bus.$off('get-products');
         },
-
+        computed: {
+            ...mapState({
+                products: 'products'
+            })
+        },
         methods: {
             get_products: function (page) {
-                let  url = '/getProducts?page=' + page;
-               console.log(url);
-                axios.get(url)
-                    .then(({data}) => {
-                        console.log(data)
-                        this.products = data.data
-                    }).catch((error) => {
-                    this.errors = error
-                })
+                this.$store.dispatch('getAllProducts', page);
             },
 
         }

@@ -10,9 +10,7 @@
             <admin-products-component />
         </div>
 
-        </div>
-        {{$products->links()}}
-    </div>
+
 
 @endsection
 

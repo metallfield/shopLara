@@ -41,7 +41,8 @@ class ProductsService
         unset($fields['image']);
         if ($data->has('image'))
         {
-            $imageName = time().'.'.$data->get('image')->extension();
+            $image = $data->get('imageName');
+            $imageName = uniqid().'_'.$image;
             $path =  'images/'.$imageName;
             $fields['image'] = $path;
         }
@@ -49,7 +50,7 @@ class ProductsService
         if (!empty($id))
         {
             if (isset($imageName)) {
-                $data->get('image')->move(storage_path() . '/app/public/images', $imageName);
+               // $data->get('image')->move(storage_path() . '/app/public/images', $imageName);
             }
             $categories = $data->get('categories');
             if (isset($categories))
@@ -76,7 +77,7 @@ class ProductsService
         }
         if ( $this->productRepository->updateProduct($fields->toArray(), $product) && isset($imageName))
         {
-             $data->get('image')->move(storage_path() . '/app/public/images', $imageName);
+             // $data->get('image')->move(storage_path() . '/app/public/images', $imageName);
          }
         $categories = $data->get('categories');
         if (isset($categories))

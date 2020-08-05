@@ -14,7 +14,7 @@
                                 <input type="text" name="name" v-model="product.name"  class="form-control my-2">
                                 <textarea name="description" v-model="product.description" id="" cols="30" rows="10" class="form-control">{{product.description}}</textarea>
                                 <ul class="overflow-auto my-3 p-3 border list-unstyled" ><li :class="{'text-success' : checked.includes(category.id)}"
-                                v-for="(category, i) in categories"
+                                v-for="(category, i) in categories" :key="category.id" v-model="product.categories"
                                 @click="checked.includes(category.id) ? checked.splice(checked.indexOf(category.id, 1)) : checked.push(category.id) ">
                                     {{category.name}}</li></ul>
                                 <input type="file"
@@ -29,6 +29,33 @@
                 </div>
             </transition>
         </div>
+            <div v-if="showed">
+                <transition name="modal">
+                    <div class="modal-mask">
+                        <div class="modal-wrapper">
+                            <div class="modal-container">
+
+                                <button type="button" class="ml-auto btn btn-outline-danger rounded-circle" @click="showed = !showed"><i class="fa fa-close"></i></button>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-end "><img :src="'/storage/'+ product.image" alt="" width="300" height="300"></div>
+                                    <div class="col ">
+                                        <h2>{{product.name}}</h2>
+                                        <h4>price: {{product.price}}$</h4>
+                                        <h4>Categories: </h4>
+                                        <ul class="list-unstyled my-3"><li v-for="category in product.categories">
+                                           <span class="badge badge-info text-white">{{category.name}}</span>
+                                        </li></ul>
+                                        <p class="border rounded p-3">
+                                         <span class="font-weight-bold">description: </span>   {{product.description}}
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </transition>
+            </div>
     <td>
         {{product.name}}
     </td>
@@ -38,6 +65,7 @@
     <td>{{product.price}}$</td>
     <td>{{product.count}}</td>
             <td>
+                <button type="button" class="btn btn-outline-primary rounded-circle" @click="showed = !showed"><i class="fa fa-eye-slash"></i></button>
                  <button @click="edit = !edit" class="btn btn-outline-primary">edit</button>
                 <button @click="deleteProduct"  class="btn btn-danger">delete</button>
             </td>
@@ -46,6 +74,8 @@
 </template>
 
 <script>
+    import {mapState} from "vuex";
+
     export default {
         name: "AdminProductComponent",
         props: {
@@ -56,44 +86,47 @@
         data(){
             return {
                 edit : false,
+                showed: false,
                 updated : false,
                 checked : [],
-                categories : [],
-                 image: Object
+                 image: '',
             }
         },
         created(){
           this.getCategories();
         },
+        computed: {
+            ...mapState({
+                categories: 'categories'
+            })
+        },
         methods: {
-
             editProduct(){
-
+                let formData = new FormData();
+                formData.append('image', this.image);
                 axios.post('/products/'+this.product.id, {
                     name : this.product.name,
                     description : this.product.description,
                     categories: this.checked,
                     price: this.product.price,
                     count: this.product.count,
-                    image: this.image,
+                    image: formData,
                     imageName: this.image.name,
                     _method : 'patch'
                 }).then((response)=>{
                     console.log(response)
+                    Bus.$emit('getProducts');
                 })
             },
             getCategories(){
-              axios.get('/getCategories')
-              .then(({data})=>{
-                  this.categories = data.data;
-                    this.product.categories.forEach((category) =>{
-                        this.checked.push(category.id);
-                    });
-              })
+             this.$store.dispatch('getAllCategories');
+                this.product.categories.forEach((category) =>{
+                    this.checked.push(category.id);
+                });
             },
             onFileChange(e) {
                 let files = e.target.files || e.dataTransfer.files;
-                this.image = files[0];
+                this.image = Array.from(files);
                 console.log(this.image);
                 if (!files.length)
                     return;
@@ -101,7 +134,13 @@
             },
 
             deleteProduct(){
-
+                axios.post('/products/'+this.product.id, {
+                    _method : 'delete'
+                })
+                .then((response)=>{
+                    console.log(response);
+                    Bus.$emit('getProducts');
+                })
             }
         }
     }
@@ -129,7 +168,7 @@
     }
 
     .modal-container {
-        width: 500px;
+        max-width: 800px;
         margin: 0px auto;
         padding: 20px 30px;
         background-color: #fff;
@@ -137,6 +176,7 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
         transition: all 0.3s ease;
         font-family: Helvetica, Arial, sans-serif;
+        overflow: auto;
     }
 
     .modal-header h3 {

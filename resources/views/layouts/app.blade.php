@@ -43,8 +43,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('categories')}}">categories</a>
                         </li>
-                        <li class="nav-item  ">
-                            <a class="nav-link" href="{{ route('basket')}}" id="showBasket" role="button">Basket <span id="countOfProd" class=""></span></a>
+                        <li class="nav-item  " id="basket">
+                            <basket-component ></basket-component>
                         </li>
                         @guest
                             <li class="nav-item">

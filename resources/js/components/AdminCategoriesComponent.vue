@@ -26,16 +26,20 @@
 <script>
 
     import CreateCategoryComponent from "./CreateCategoryComponent";
+    import {mapState} from "vuex";
       export default {
         name: "AdminCategoriesComponent",
         components: {CreateCategoryComponent},
         data(){
             return{
-                categories: [],
-
                 query: '/getCategories?=page'
             }
         },
+          computed:{
+              ...mapState({
+                  categories: 'categories'
+              })
+          },
         created() {
             Bus.$on('getCategories',  this.getCategories);
 
@@ -45,13 +49,7 @@
          },
          methods:{
             getCategories(page){
-                let url = '/getCategories?page='+ page;
-                axios.get(url)
-                .then(({data})=>{
-                    console.log(data.data);
-                    this.categories = data.data;
-
-                })
+              this.$store.dispatch('getAllCategories', page);
             }
         }
     }

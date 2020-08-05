@@ -123,7 +123,7 @@
                 this.current_page = page;
                 Bus.$emit('get-products' , this.current_page);
                 Bus.$emit('getCategories' , this.current_page);
-
+                Bus.$emit('getProducts' , this.current_page);
             },
 
         }

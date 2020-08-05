@@ -8,8 +8,12 @@ require('./bootstrap');
 
 import Vue from 'vue';
 
-window.Bus = new Vue();
 
+window.Bus = new Vue();
+import Vuex from 'vuex';
+
+ Vue.use(Vuex);
+import storeData from './strore/index';
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -17,7 +21,10 @@ window.Bus = new Vue();
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
+const store = new Vuex.Store(
+    storeData,
 
+)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
@@ -30,6 +37,9 @@ Vue.component('admin-category-component', require('./components/AdminCategoryCom
 Vue.component('create-category-component', require('./components/CreateCategoryComponent').default);
 Vue.component('admin-products-component', require('./components/AdminProductsComponent').default);
 Vue.component('admin-product-component', require('./components/AdminProductComponent').default);
+Vue.component('admin-create-product-component', require('./components/AdminCreateProductComponent').default);
+Vue.component('basket-component', require('./components/BasketComponent').default);
+Vue.component('add-product', require('./components/AddProductComponent').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -38,16 +48,25 @@ Vue.component('admin-product-component', require('./components/AdminProductCompo
  */
 
 new Vue({
-    el: '#adminCats'
+    el: '#adminCats',
+    store,
 })
-
 new Vue({
-    el: '#adminProducts'
+    el: '#addBasket',
+    store,
+})
+new Vue({
+    el: '#basket',
+    store,
+})
+new Vue({
+    el: '#adminProducts',
+    store,
 })
 
-  new Vue({
+const product = new Vue({
     el: '#products',
-
+      store,
 
 });
 
