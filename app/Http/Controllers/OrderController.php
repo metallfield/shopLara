@@ -29,10 +29,17 @@ class OrderController extends Controller
          return view('orders.show', compact('order'));
     }
 
-    public function incomingOrders()
+    public function getIncomingOrders(Request $request)
     {
         $orders = $this->orderService->getIncomingOrders(Auth::user());
-
+        if ($request->ajax())
+        {
+            return response()->json($orders);
+        }
+        return abort(404);
+    }
+    public function incomingOrders()
+    {
         return view('orders.incoming', compact('orders'));
     }
     public function incomingOrderShow(Order $order)

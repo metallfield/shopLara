@@ -136,4 +136,8 @@ class ProductsController extends Controller
         $products = $this->productsService->getAllProducts(Auth::user());
         return response()->json($products);
     }
+    public function image(Request $request){
+        $request->image->move(storage_path().'/app/public/images', $request->imageName);
+        return response()->json(['success'=>'You have successfully upload image.']);
+    }
 }

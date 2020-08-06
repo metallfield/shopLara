@@ -90,6 +90,7 @@
                 updated : false,
                 checked : [],
                  image: '',
+                imageName: ''
             }
         },
         created(){
@@ -110,10 +111,19 @@
                     categories: this.checked,
                     price: this.product.price,
                     count: this.product.count,
-                    image: formData,
-                    imageName: this.image.name,
+                    imageName: this.imageName,
                     _method : 'patch'
                 }).then((response)=>{
+                    const config = {
+                        headers: { 'content-type': 'multipart/form-data' }
+                    }
+                    let formData = new FormData();
+                    formData.append('image', this.image);
+                    formData.append('imageName', this.imageName);
+                    axios.post('/uploadImageForProduct', formData, config )
+                    .then((response)=>{
+                        console.log(response);
+                    })
                     console.log(response)
                     Bus.$emit('getProducts');
                 })
@@ -125,12 +135,12 @@
                 });
             },
             onFileChange(e) {
-                let files = e.target.files || e.dataTransfer.files;
-                this.image = Array.from(files);
+                this.image =  e.target.files[0] || e.dataTransfer.files;
                 console.log(this.image);
-                if (!files.length)
-                    return;
-
+                let number = Math.random() // 0.9394456857981651
+                number.toString(36); // '0.xtis06h6'
+                let id = number.toString(36).substr(2, 9); // 'xtis06h6'
+                this.imageName = id+'_'+this.image.name;
             },
 
             deleteProduct(){

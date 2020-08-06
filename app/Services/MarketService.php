@@ -51,7 +51,7 @@ class MarketService
     }
     public function checkOwner(Market $market, User $user)
     {
-        if ($user === $market->user_id && $market->user_id !== null)
+        if ($user->id === $market->user_id && $market->user_id !== null)
         {
             return true;
         }

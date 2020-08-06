@@ -1,7 +1,9 @@
 <template>
     <div>
-<button type="button" v-if="!added" @click="added = !added, addProduct" class="btn btn-outline-success">Add to Basket</button>
-    <basket-component v-if="added" />
+<button type="button" v-if="!added" @click="added = !added, addProduct()" class="btn btn-outline-success">Add to Basket</button>
+    <basket-component v-if="added"
+                        :button="true"
+    />
     </div>
 </template>
 
@@ -25,12 +27,7 @@
         methods: {
             addProduct()
             {
-                axios.post('/basket/add/'+this.product.id)
-                .then((response)=>{
-                    console.log(response)
-                })
-               // this.$store.dispatch('addProduct', this.product);
-
+                this.$store.dispatch('addProduct', this.product);
             }
         }
     }

@@ -10,8 +10,10 @@ export default {
         products: [],
         categories: [],
         basket: {
-            products: []
-        }
+            products: [],
+        },
+        incomingOrders: []
+
     },
 
     actions : {
@@ -33,16 +35,39 @@ export default {
             axios.get('/getBasket/')
                 .then((response)=>{
                     console.log(response.data);
-                    context.commit('setBasket', response.data);
+                    context.commit("basket", response.data);
                 })
         },
-        addProduct(context, payload)
+        addProduct(context, product)
         {
-            axios.post('/basket/add/'+ payload.product.id)
+            axios.post('/basket/add/'+ product.id)
                 .then((response)=>{
-                    context.commit('addToBasket', payload.product);
+                    console.log(response);
+                 })
+        },
+        remove_product(context, product)
+        {
+            axios.post('/basket/remove/'+ product.id)
+                .then((response)=>{
+                    console.log(response);
+                 })
+        },
+        getIncomingOrders(context, page){
+            axios.get('/getIncomingOrders')
+                .then((response)=>{
+                    console.log(response.data)
+                    context.commit('setIncomingOrders', response.data);
                 })
         }
+    },
+    getters : {
+      getBasket: state => {
+          return state.basket.products;
+      },
+        basketTotal: state => {
+          return state.total;
+        },
+
     },
     mutations: {
         product(state, data){
@@ -51,14 +76,13 @@ export default {
         categories(state, data){
             return state.categories = data;
         },
-        setBasket(state, data)
-        {
-            return state.basket.products = data;
+        basket(state, data) {
+            return state.basket = data;
         },
-        addToBasket(state, product)
-        {
-            return state.basket.products.push(product);
+        setIncomingOrders(state, data){
+            return state.incomingOrders = data;
         }
+
     }
 };
 

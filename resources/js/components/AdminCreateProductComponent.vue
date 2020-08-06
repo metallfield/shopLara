@@ -14,7 +14,7 @@
                                                                              @click="checked.includes(category.id) ? checked.splice(checked.indexOf(category.id, 1)) : checked.push(category.id) ">
                     {{category.name}}</li></ul>
                 <input type="file"
-                       @change=""
+                       @change="onFileChange"
                        class="form-control-file">
                 <label for="price">price</label>
                 <input type="text" name="price" id="price" class="my-2 form-control" v-model="product.price">
@@ -40,8 +40,10 @@
                     description: '',
                     price: '',
                     count: '',
-                    image: '',
+
                 },
+                image: '',
+                imageName: ''
             }
         } ,
         created() {
@@ -56,20 +58,36 @@
             getCategories(){
                 this.$store.dispatch('getAllCategories');
                 },
-
+            onFileChange(e) {
+                this.image =  e.target.files[0] || e.dataTransfer.files;
+                let number = Math.random() // 0.9394456857981651
+                number.toString(36); // '0.xtis06h6'
+                let id = number.toString(36).substr(2, 9); // 'xtis06h6'
+                this.imageName = id+'_'+this.image.name;
+            },
             addProduct(){
                 axios.post('/products', {
                     name : this.product.name,
                     description: this.product.description,
                     price: this.product.price,
                     count: this.product.count,
-                    image: this.product.image,
+                    imageName: this.imageName,
                     categories: this.checked
                 }).then((response)=>{
                     this.created = true;
                     this.product = '';
                     this.checked = '';
                     console.log(response);
+                    const config = {
+                        headers: { 'content-type': 'multipart/form-data' }
+                    }
+                    let formData = new FormData();
+                    formData.append('image', this.image);
+                    formData.append('imageName', this.imageName);
+                    axios.post('/uploadImageForProduct', formData, config )
+                        .then((response)=>{
+                            console.log(response);
+                        })
                     Bus.$emit('getProducts');
                 })
             }

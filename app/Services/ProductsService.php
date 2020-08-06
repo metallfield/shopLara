@@ -39,19 +39,11 @@ class ProductsService
         $fields = $data->except('categories');
         $fields['user_id'] = $data['user_id'];
         unset($fields['image']);
-        if ($data->has('image'))
-        {
-            $image = $data->get('imageName');
-            $imageName = uniqid().'_'.$image;
-            $path =  'images/'.$imageName;
-            $fields['image'] = $path;
-        }
+        $fields['image'] = 'images/'.$data['imageName'];
         $id = $this->productRepository->storeProduct($fields->toArray());
         if (!empty($id))
         {
-            if (isset($imageName)) {
-               // $data->get('image')->move(storage_path() . '/app/public/images', $imageName);
-            }
+
             $categories = $data->get('categories');
             if (isset($categories))
             {
@@ -67,18 +59,9 @@ class ProductsService
     {
         $fields = $data->except('categories');
         unset($fields['image']);
-        if ($data->has('image') && $data->get('image') !== null)
-        {
-            Storage::delete($product->image);
-            $image = $data->get('imageName');
-            $imageName = uniqid().'_'.$image;
-            $path =  'images/'.$imageName;
-            $fields['image'] = $path;
-        }
-        if ( $this->productRepository->updateProduct($fields->toArray(), $product) && isset($imageName))
-        {
-             // $data->get('image')->move(storage_path() . '/app/public/images', $imageName);
-         }
+        $fields['image'] = 'images/'.$data['imageName'];
+      $this->productRepository->updateProduct($fields->toArray(), $product) && isset($imageName);
+
         $categories = $data->get('categories');
         if (isset($categories))
         {

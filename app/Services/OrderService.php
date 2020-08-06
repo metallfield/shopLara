@@ -30,7 +30,7 @@ class OrderService
         {
             if ($product->orders->count() > 0)
             {
-                foreach ($product->orders as $order)
+                foreach ($product->orders->load('products') as $order)
                 {
                     if ($order->status === 1)
                     {

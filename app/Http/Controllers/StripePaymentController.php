@@ -31,7 +31,7 @@ class StripePaymentController extends Controller
                 "description" => "Test payment from shop.loc."
             ]);
             $order_id = session('orderId');
-            $success = (new Basket())->saveOrder($name, $billing_address, $email, $shipping, $order_id);
+            $success = (new Basket(Auth::user()))->saveOrder($name, $billing_address, $email, $shipping, $order_id);
             if ($success) {
                 session()->forget('orderId');
                 session()->flash('success', 'Payment successful!');

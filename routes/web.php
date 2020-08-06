@@ -56,7 +56,8 @@ Route::get('/getCountOfProducts', 'BasketController@getCountOfProducts');
 
 Route::get('/getCategories', 'CategoriesController@getCategories');
 Route::get('/getProducts', 'ProductsController@getProducts');
-
+Route::post('/uploadImageForProduct', 'ProductsController@image');
+Route::get('/getIncomingOrders', 'OrderController@getIncomingOrders');
 Route::get('/vue', function (){
     return view('vue');
 });

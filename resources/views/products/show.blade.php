@@ -39,9 +39,9 @@
     </div>
 
          @if($product->isAvaible())
-            <button class="btn btn-outline-dark" type="button" data-product="{{$product->id}}" id="addProduct" >add to basket</button>
-
-
+         <div id="addBasket">
+        <add-product :product="{{$product}}"
+        /></div>
     @else
           <h3 class="font-weight-bold text-dark">нет в наличии</h3>
         @endif
