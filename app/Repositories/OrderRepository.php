@@ -41,17 +41,4 @@ class OrderRepository
         }
     }
 
-    public function getCountOfProducts(Order $order)
-    {
-        $count = 0;
-        foreach($order->products->load('orders') as $product){
-            $count+= $product->pivot->count;
-        }
-        if ($count > 0) {
-            return $count;
-        }
-        else{
-            return null;
-        }
-    }
 }

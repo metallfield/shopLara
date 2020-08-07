@@ -5,8 +5,10 @@ namespace App\Repositories;
 
 
 use App\Category;
+use App\Order;
 use App\Product;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository
 {
@@ -16,12 +18,17 @@ class ProductRepository
         if($user !== null) {
             $query->where('user_id', $user->id);
         }
-        return $query->paginate(4);
+        return $query->paginate(9);
     }
     public function getRecommendProducts(Product $product)
     {
-        $category = $product->categories->first();
-        return $category->products->load('categories') ? $category->products->take(3) : null ;
+        if ($product->categories->load('products')->count() > 0)
+        {
+            $category = $product->categories->first();
+            return  $category->products->load('categories')->take(3);
+        }
+        return null;
+
     }
     public function getAllProductsForFilter()
     {
@@ -72,5 +79,16 @@ class ProductRepository
             return $product->pivot->count * $product->price;
         }
         return $product->price;
+    }
+
+    public function getStatistic()
+    {
+
+        return Product::select('price')->get();
+    }
+
+    public function getMostTrendingProduct()
+    {
+       return DB::table('order_product')->select('product_id')->get();
     }
 }

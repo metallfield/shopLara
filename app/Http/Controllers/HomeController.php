@@ -78,7 +78,9 @@ class HomeController
     }
     public function categoryShow(Category $category)
     {
-        return view('categoryShow', compact('category'));
+        $category = $category->load('products');
+        $products = $category->products->load('categories');
+        return view('categoryShow', compact('category', 'products'));
     }
     public function ProductShow(Product $product)
     {

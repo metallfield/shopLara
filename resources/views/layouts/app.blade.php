@@ -95,6 +95,7 @@
                                 <a class="dropdown-item" href="{{ route('categories.index') }}">
                                     categories edit
                                 </a>
+                                <a class="dropdown-item" href="{{route('statistic')}}">statistic</a>
                                 @endadmin
                             </div>
 
@@ -123,8 +124,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
-    <script src="/js/addProduct.js"></script>
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script src="/js/stripe.js"></script>
     <script src="/js/mapInput.js"></script>
     <script src="/js/MarketProducts.js"></script>

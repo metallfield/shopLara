@@ -36,18 +36,7 @@ class BasketController extends Controller
          return response()->json($order);
     }
 
-    public function getCountOfProducts()
-    {
-        $order = (new Basket(Auth::user()))->getOrder();
-        if ($order !== null)
-        {
-            $count = $this->orderRepository->getCountOfProducts($order);
-            return response()->json($count);
-        }else {
-            return response()->json(['status' => 'empty']);
-        }
 
-    }
     public function basketPlace(){
          $basket = new Basket(Auth::user());
         $order = $basket->getOrder();

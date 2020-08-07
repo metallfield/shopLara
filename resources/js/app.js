@@ -43,13 +43,16 @@ Vue.component('add-product', require('./components/AddProductComponent').default
 Vue.component('basket-product', require('./components/BasketProductComponent').default);
 Vue.component('incoming-orders-component', require('./components/IncomingOrdersComponent').default);
 Vue.component('incoming-order-component', require('./components/IncomingOrderComponent').default);
+Vue.component('statistic-component', require('./components/StatisticComponent').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
+new Vue({
+    el: '#statistic',
+})
 new Vue({
     el:'#order',
     store,

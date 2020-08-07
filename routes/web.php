@@ -52,12 +52,17 @@ Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post')
 
 
 Route::get('/getBasket', 'BasketController@getBasketForAjax');
-Route::get('/getCountOfProducts', 'BasketController@getCountOfProducts');
+//Route::get('/getCountOfProducts', 'BasketController@getCountOfProducts');
 
 Route::get('/getCategories', 'CategoriesController@getCategories');
-Route::get('/getProducts', 'ProductsController@getProducts');
+Route::get('/getProducts', 'HomeController@getProducts');
 Route::post('/uploadImageForProduct', 'ProductsController@image');
 Route::get('/getIncomingOrders', 'OrderController@getIncomingOrders');
 Route::get('/vue', function (){
     return view('vue');
 });
+
+
+Route::get('/statistic', 'StatisticController@index')->name('statistic');
+Route::get('/getStatistic', 'StatisticController@getStatistic');
+Route::get('/getTopTrendingProducts', 'StatisticController@getTopTrendingProducts');

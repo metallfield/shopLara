@@ -40,7 +40,7 @@ class OrderController extends Controller
     }
     public function incomingOrders()
     {
-        return view('orders.incoming', compact('orders'));
+        return view('orders.incoming');
     }
     public function incomingOrderShow(Order $order)
     {

@@ -26,11 +26,11 @@ class OrderService
     }
     public function getIncomingOrders(User $user)
     {
-        foreach ($user->products->load('user') as $product)
+        foreach ($user->products->load('orders') as $product)
         {
             if ($product->orders->count() > 0)
             {
-                foreach ($product->orders->load('products') as $order)
+                foreach ($product->orders->loadMissing('products') as $order)
                 {
                     if ($order->status === 1)
                     {

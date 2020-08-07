@@ -8,7 +8,7 @@
         <p>description: {{$category->description}}</p>
 
             <div class="row">
-                @foreach($category->products as $product)
+                @foreach($products as $product)
                     <div class="col-3 m-4 border rounded">
                         <img src="{{Storage::url($product->image)}}" alt="" width="" height="100" class="w-100">
                         <h4><a href="{{route('productShow', [$product])}}">{{$product->name}}</a></h4>
