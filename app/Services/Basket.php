@@ -55,12 +55,12 @@ class Basket
         }
     }
 
-    public function SaveOrder($name, $address, $email ,$shipping = null, $order_id){
+    public function SaveOrder($name, $address, $email ,$shipping = null, $order_id, $amount){
         if (!$this->countAvailable()) {
             return false;
         }
         $this->changeCount();
-        return $this->orderRepository->saveOrder($name, $address, $email, $shipping, $order_id);
+        return $this->orderRepository->saveOrder($name, $address, $email, $shipping, $order_id, $amount);
     }
 
     public function removeProduct(Product $product){

@@ -8,6 +8,7 @@ use App\Category;
 use App\Order;
 use App\Product;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ProductRepository
@@ -84,7 +85,7 @@ class ProductRepository
     public function getStatistic()
     {
 
-        return Product::sum('price');
+        return Product::select('price')->where('count', '>', '0')->sum('price');
     }
     public function getProductsCount(){
         return Product::count();
@@ -96,5 +97,19 @@ class ProductRepository
     public function getMostTrendingProduct()
     {
        return DB::table('order_product')->select('product_id')->get();
+    }
+
+    public function getOrdersStatistic()
+    {
+        return  Order::select('created_at')->get()->map(function($item) {
+            $item->day = $item->created_at->day;
+            $item->month = $item->created_at->month;
+            return $item;
+        })
+            ->groupBy(['month', 'day'])
+            ->map
+            ->map(function($day) {
+                return $day->count();
+            });
     }
 }

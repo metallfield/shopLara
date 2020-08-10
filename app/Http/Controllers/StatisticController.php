@@ -36,4 +36,14 @@ class StatisticController extends Controller
         $products = $this->statisticService->getMostTrendingProduct();
         return response()->json($products);
     }
+    public function getOrdersStatistic()
+    {
+        $result = $this->statisticService->getOrdersStatistic();
+        return response()->json($result);
+    }
+    public function getTotalOrdersSum()
+    {
+        $result = $this->statisticService->getTotalOrdersSum();
+        return response()->json($result);
+    }
 }

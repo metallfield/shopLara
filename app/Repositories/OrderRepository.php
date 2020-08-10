@@ -24,7 +24,7 @@ class OrderRepository
         return  $user->orders()->Active()->paginate(6);
     }
 
-    public function saveOrder($name, $address, $email, $shipping = null, $order_id)
+    public function saveOrder($name, $address, $email, $shipping = null, $order_id, $amount)
     {
         $order = Order::where('id', $order_id)->first();
         if ($order->status == 0) {
@@ -34,11 +34,20 @@ class OrderRepository
             $order->shipping_address =  $shipping ? $shipping : null;
             $order->user_id = Auth::id();
             $order->status = 1;
+            $order->amount = $amount;
             $order->save();
             return true;
         }else{
             return false;
         }
     }
+    public function getTotalOrdersSum()
+    {
+       return Order::select('amount')->Active()->sum('amount');
+    }
 
+    public function getCountOfOrders()
+    {
+        return Order::count();
+    }
 }

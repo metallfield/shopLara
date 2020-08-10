@@ -66,3 +66,5 @@ Route::get('/vue', function (){
 Route::get('/statistic', 'StatisticController@index')->name('statistic');
 Route::get('/getStatistic', 'StatisticController@getStatistic');
 Route::get('/getTopTrendingProducts', 'StatisticController@getTopTrendingProducts');
+Route::get('/getOrdersStatistic', 'StatisticController@getOrdersStatistic');
+Route::get('/getTotalOrdersSum', 'StatisticController@getTotalOrdersSum');
