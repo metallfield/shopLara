@@ -31,22 +31,23 @@ class StatisticService
         $keys = array_keys($count);
         $products = [];
         $product= [];
-        foreach ($keys as $key)
-        {
-            $product[] = $this->productRepository->getProductById($key);
-            $product['countTrending'] = $count[$key];
-            $products[] = $product;
-        }
+        $products = $this->productRepository->getProductsByIds($keys) ;
+        $sort = array_flip($keys);
+        usort($products, function($a,$b) use($sort){
+            return $sort[$a['id']] - $sort[$b['id']];
+        });
+//        foreach ($keys as $key)
+//        {
+//            $product[] = $this->productRepository->getProductById($key);
+//            $product['countTrending'] = $count[$key];
+//            $products[] = $product;
+//        }
         return $products;
     }
     public function getProductStatistic()
    {
-       $sum = 0;
-       $products = $this->productRepository->getStatistic();
-        foreach ($products as $product)
-       {
-           $sum += $product->price;
-       }
-       return ['sum' => $sum, 'count' => $products->count()];
+       $sum = $this->productRepository->getStatistic();
+        $count = $this->productRepository->getProductsCount();
+       return ['sum' => $sum, 'count' => $count];
    }
 }

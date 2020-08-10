@@ -84,9 +84,15 @@ class ProductRepository
     public function getStatistic()
     {
 
-        return Product::select('price')->get();
+        return Product::sum('price');
     }
-
+    public function getProductsCount(){
+        return Product::count();
+    }
+    public function getProductsByIds($ids)
+    {
+        return Product::find($ids)->all();
+    }
     public function getMostTrendingProduct()
     {
        return DB::table('order_product')->select('product_id')->get();
