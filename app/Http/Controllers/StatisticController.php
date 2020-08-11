@@ -46,4 +46,9 @@ class StatisticController extends Controller
         $result = $this->statisticService->getTotalOrdersSum();
         return response()->json($result);
     }
+    public function getCategoriesStatistic()
+    {
+        $result = $this->statisticService->getCategoriesStatistic();
+        return response()->json($result);
+    }
 }

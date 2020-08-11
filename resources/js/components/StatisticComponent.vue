@@ -3,20 +3,25 @@
         <h2>Statistic Page</h2>
         <div class="row">
             <div class="col-3">
-            <div class=" border rounded p-3 bg-success pointer text-center" @click="productStatistic = true , ordersStatistic = false" >
+            <div class=" border rounded p-3 bg-success pointer text-center" @click="state = 'products'" >
                 <h3>products statistic</h3>
             </div>
-        <div class=" border rounded p-3 bg-info pointer text-center" @click="ordersStatistic = !ordersStatistic , productStatistic = !productStatistic" >
+        <div class=" border rounded p-3 bg-info pointer text-center" @click="state = 'orders'" >
             <h3>Orders statistic</h3>
         </div>
+                <div class=" border rounded p-3 bg-warning pointer text-center" @click="state = 'categories'" >
+                    <h3>Categories statistic</h3>
+                </div>
             </div>
     <div class="col-7">
             <product-statistic :productStatistic="statistic"
                                 :topProducts="TopProducts"
-                               v-if="productStatistic"
+                               v-if="state==='products'"
             />
-            <orders-statistic v-if="ordersStatistic"
-            />  </div></div>
+            <orders-statistic v-if="state==='orders'"
+            />
+            <categories-statistic  v-if="state==='categories'"/>
+    </div></div>
     </div>
 </template>
 
@@ -24,22 +29,27 @@
 
     import ProductsStatisticComponent from "./ProductsStatisticComponent";
     import OrdersStatisticComponent from "./OrdersStatisticComponent";
+    import CategoriesStatisticComponent from "./CategoriesStatisticComponent";
     export default {
         name: "StatisticComponent",
         components: {
           ProductsStatisticComponent,
-            OrdersStatisticComponent
+            OrdersStatisticComponent,
+            CategoriesStatisticComponent
         },
         data(){
             return{
                 statistic : [],
-                productStatistic : true,
-                ordersStatistic : false,
+                state: {
+                    type: String,
+
+                },
                 TopProducts: [],
             }
         },
         created() {
           this.getStatistic();
+          this.state= 'products';
         },
         methods: {
             getStatistic()

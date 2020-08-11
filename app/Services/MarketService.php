@@ -41,13 +41,8 @@ class MarketService
         $fields['lat'] = $data->get('address_latitude');
         $fields['lng'] = $data->get('address_longitude');
         $fields['user_id'] = $user;
-        $result = $this->marketRepository->updateMarket($fields, $market);
-        if ($result)
-        {
-            return true;
-        }else{
-            return false;
-        }
+        return $this->marketRepository->updateMarket($fields, $market);
+
     }
     public function checkOwner(Market $market, User $user)
     {

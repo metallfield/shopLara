@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Repositories\CategoriesRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 
@@ -18,11 +19,16 @@ class StatisticService
      * @var \App\Repositories\OrderRepository
      */
     private $orderRepository;
+    /**
+     * @var \App\Repositories\CategoriesRepository
+     */
+    private $categoriesRepository;
 
     public function __construct()
     {
         $this->productRepository = app(ProductRepository::class);
         $this->orderRepository = app(OrderRepository::class);
+        $this->categoriesRepository = app(CategoriesRepository::class);
     }
 
     public function getMostTrendingProduct(){
@@ -32,23 +38,16 @@ class StatisticService
         {
             $mostSailsArray[] = $ms->product_id;
         }
-        $count=array_count_values($mostSailsArray);//Counts the values in the array, returns associatve array
-        arsort($count);//Sort it from highest to lowest
+        $count=array_count_values($mostSailsArray);
+        arsort($count);
         $keys = array_keys($count);
-        $products = [];
-        $product= [];
         $keys = array_slice($keys, 0,10);
         $products = $this->productRepository->getProductsByIds($keys) ;
         $sort = array_flip($keys);
         usort($products, function($a,$b) use($sort){
             return $sort[$a['id']] - $sort[$b['id']];
         });
-//        foreach ($keys as $key)
-//        {
-//            $product[] = $this->productRepository->getProductById($key);
-//            $product['countTrending'] = $count[$key];
-//            $products[] = $product;
-//        }
+
         return [$products, 'count'=> $count];
     }
     public function getProductStatistic()
@@ -67,5 +66,11 @@ class StatisticService
        $price = $this->orderRepository->getTotalOrdersSum();
        $count = $this->orderRepository->getCountOfOrders();
        return ['price' => $price, 'count' => $count];
+   }
+
+   public function getCategoriesStatistic()
+   {
+       return $this->categoriesRepository->getCategoriesStatistic();
+
    }
 }

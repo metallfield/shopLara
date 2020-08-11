@@ -46,6 +46,7 @@ Vue.component('incoming-order-component', require('./components/IncomingOrderCom
 Vue.component('statistic-component', require('./components/StatisticComponent').default);
 Vue.component('product-statistic', require('./components/ProductsStatisticComponent').default);
 Vue.component('orders-statistic', require('./components/OrdersStatisticComponent').default);
+Vue.component('categories-statistic', require('./components/CategoriesStatisticComponent').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

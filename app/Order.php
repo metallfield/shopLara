@@ -22,31 +22,9 @@ class Order extends Model
         return $sum;
     }
 
-    public function countOfProducts(){
-        $count = 0;
-        foreach($this->products->load('orders') as $product){
-            $count+= $product->pivot->count;
-        }
-        if ($count > 0) {
-            return "Count of products: " . $count;
-        }
-        else{
-            return 'basked is empty';
-        }
 
-    }
     public function scopeActive($query){
         return $query->where('status', '=', 1);
     }
-    public function ownerProductsSum(User $user)
-    {
-        $sum = 0;
-        foreach($this->products()->withTrashed()->get() as $product){
-            if ($user->products->contains($product))
-            {
-                $sum += $product->price * $product->pivot->count;
-            }
-        }
-        return $sum;
-    }
+
 }
